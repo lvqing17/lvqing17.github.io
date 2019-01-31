@@ -71,7 +71,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css">
 
 
-  <meta name="keywords" content="leetcode,">
+  <meta name="keywords" content="leetcode,other,">
 
 
 
@@ -87,15 +87,18 @@
 
 
 
-<meta name="keywords" content="leetcode">
+<meta name="description" content="题目描述： 假设你正在爬楼梯。需要 n 阶你才能到达楼顶。 每次你可以爬 1 或 2 个台阶。你有多少种不同的方法可以爬到楼顶呢？ 注意：给定 n 是一个正整数。 示例 1： 123456&amp;gt; 输入： 2&amp;gt; 输出： 2&amp;gt; 解释： 有两种方法可以爬到楼顶。&amp;gt; 1.  1 阶 + 1 阶&amp;gt; 2.  2 阶&amp;gt;   示例 2： 1234567&amp;gt; 输入： 3&amp;gt;">
+<meta name="keywords" content="leetcode,other">
 <meta property="og:type" content="article">
 <meta property="og:title" content="leetcode之70. 爬楼梯">
 <meta property="og:url" content="http://yoursite.com/2019/01/31/leetcode之70-爬楼梯/index.html">
 <meta property="og:site_name" content="晴宝">
+<meta property="og:description" content="题目描述： 假设你正在爬楼梯。需要 n 阶你才能到达楼顶。 每次你可以爬 1 或 2 个台阶。你有多少种不同的方法可以爬到楼顶呢？ 注意：给定 n 是一个正整数。 示例 1： 123456&amp;gt; 输入： 2&amp;gt; 输出： 2&amp;gt; 解释： 有两种方法可以爬到楼顶。&amp;gt; 1.  1 阶 + 1 阶&amp;gt; 2.  2 阶&amp;gt;   示例 2： 1234567&amp;gt; 输入： 3&amp;gt;">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-01-31T04:44:59.455Z">
+<meta property="og:updated_time" content="2019-01-31T05:02:12.035Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="leetcode之70. 爬楼梯">
+<meta name="twitter:description" content="题目描述： 假设你正在爬楼梯。需要 n 阶你才能到达楼顶。 每次你可以爬 1 或 2 个台阶。你有多少种不同的方法可以爬到楼顶呢？ 注意：给定 n 是一个正整数。 示例 1： 123456&amp;gt; 输入： 2&amp;gt; 输出： 2&amp;gt; 解释： 有两种方法可以爬到楼顶。&amp;gt; 1.  1 阶 + 1 阶&amp;gt; 2.  2 阶&amp;gt;   示例 2： 1234567&amp;gt; 输入： 3&amp;gt;">
 
 
 
@@ -360,7 +363,7 @@
                   <span class="post-meta-item-text">字数统计</span>
                 
                 <span title="字数统计">
-                  0 字
+                  227 字
                 </span>
               
 
@@ -395,7 +398,23 @@
       
 
       
-        
+        <h3 id="题目描述："><a href="#题目描述：" class="headerlink" title="题目描述："></a>题目描述：</h3><blockquote>
+<p>假设你正在爬楼梯。需要 <em>n</em> 阶你才能到达楼顶。</p>
+<p>每次你可以爬 1 或 2 个台阶。你有多少种不同的方法可以爬到楼顶呢？</p>
+<p><strong>注意：</strong>给定 <em>n</em> 是一个正整数。</p>
+<p><strong>示例 1：</strong></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&gt; 输入： <span class="number">2</span></span><br><span class="line">&gt; 输出： <span class="number">2</span></span><br><span class="line">&gt; 解释： 有两种方法可以爬到楼顶。</span><br><span class="line">&gt; <span class="number">1.</span>  <span class="number">1</span> 阶 + <span class="number">1</span> 阶</span><br><span class="line">&gt; <span class="number">2.</span>  <span class="number">2</span> 阶</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+</blockquote>
+<blockquote>
+<p><strong>示例 2：</strong></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&gt; 输入： <span class="number">3</span></span><br><span class="line">&gt; 输出： <span class="number">3</span></span><br><span class="line">&gt; 解释： 有三种方法可以爬到楼顶。</span><br><span class="line">&gt; <span class="number">1.</span>  <span class="number">1</span> 阶 + <span class="number">1</span> 阶 + <span class="number">1</span> 阶</span><br><span class="line">&gt; <span class="number">2.</span>  <span class="number">1</span> 阶 + <span class="number">2</span> 阶</span><br><span class="line">&gt; <span class="number">3.</span>  <span class="number">2</span> 阶 + <span class="number">1</span> 阶</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+</blockquote>
+<a id="more"></a>
+<h3 id="解题思路："><a href="#解题思路：" class="headerlink" title="解题思路："></a>解题思路：</h3><blockquote>
+<p>动态规划，时间复杂度: $O(n)$, 空间复杂度: $O(n)$.</p>
+</blockquote>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">climbStairs</span><span class="params">(<span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">        <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; vec(n + <span class="number">1</span>);</span><br><span class="line">        vec[<span class="number">0</span>] = <span class="number">0</span>;</span><br><span class="line">        vec[<span class="number">1</span>] = <span class="number">1</span>;</span><br><span class="line">        vec[<span class="number">2</span>] = <span class="number">2</span>;</span><br><span class="line">        <span class="keyword">if</span>(n == <span class="number">1</span>)</span><br><span class="line">            <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">if</span>(n == <span class="number">2</span>)</span><br><span class="line">            <span class="keyword">return</span> <span class="number">2</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">3</span>; i &lt;= n; i++)</span><br><span class="line">        &#123;</span><br><span class="line">            vec[i] = vec[i - <span class="number">1</span>] + vec[i - <span class="number">2</span>];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> vec[n];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
       
     </div>
 
@@ -420,6 +439,8 @@
           
             <a href="/tags/leetcode/" rel="tag"># leetcode</a>
           
+            <a href="/tags/other/" rel="tag"># other</a>
+          
         </div>
       
 
@@ -440,6 +461,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/01/31/leetcode之83-删除排序链表中的重复元素/" rel="prev" title="leetcode之83. 删除排序链表中的重复元素">
+                leetcode之83. 删除排序链表中的重复元素 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -486,8 +511,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image" src="https://blog-1253453438.cos.ap-beijing.myqcloud.com/hexo_icon/lq.jpg" alt="晴宝宝">
           <p class="site-author-name" itemprop="name">晴宝宝</p>
@@ -500,7 +534,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/index.html">
-                <span class="site-state-item-count">28</span>
+                <span class="site-state-item-count">31</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -522,7 +556,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-count">9</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -558,6 +592,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#题目描述："><span class="nav-number">1.</span> <span class="nav-text">题目描述：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#解题思路："><span class="nav-number">2.</span> <span class="nav-text">解题思路：</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       

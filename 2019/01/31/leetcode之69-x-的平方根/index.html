@@ -71,7 +71,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css">
 
 
-  <meta name="keywords" content="leetcode,">
+  <meta name="keywords" content="leetcode,other,">
 
 
 
@@ -88,14 +88,14 @@
 
 
 <meta name="description" content="题目描述： 实现 int sqrt(int x) 函数。 计算并返回 x 的平方根，其中 x 是非负整数。 由于返回类型是整数，结果只保留整数的部分，小数部分将被舍去。 示例 1: 123&amp;gt; 输入: 4&amp;gt; 输出: 2&amp;gt;   示例 2: 12345&amp;gt; 输入: 8&amp;gt; 输出: 2&amp;gt; 说明: 8 的平方根是 2.82842..., &amp;gt;      由于返回类型是整数">
-<meta name="keywords" content="leetcode">
+<meta name="keywords" content="leetcode,other">
 <meta property="og:type" content="article">
 <meta property="og:title" content="leetcode之69. x 的平方根">
 <meta property="og:url" content="http://yoursite.com/2019/01/31/leetcode之69-x-的平方根/index.html">
 <meta property="og:site_name" content="晴宝">
 <meta property="og:description" content="题目描述： 实现 int sqrt(int x) 函数。 计算并返回 x 的平方根，其中 x 是非负整数。 由于返回类型是整数，结果只保留整数的部分，小数部分将被舍去。 示例 1: 123&amp;gt; 输入: 4&amp;gt; 输出: 2&amp;gt;   示例 2: 12345&amp;gt; 输入: 8&amp;gt; 输出: 2&amp;gt; 说明: 8 的平方根是 2.82842..., &amp;gt;      由于返回类型是整数">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-01-31T04:44:50.578Z">
+<meta property="og:updated_time" content="2019-01-31T05:01:59.349Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="leetcode之69. x 的平方根">
 <meta name="twitter:description" content="题目描述： 实现 int sqrt(int x) 函数。 计算并返回 x 的平方根，其中 x 是非负整数。 由于返回类型是整数，结果只保留整数的部分，小数部分将被舍去。 示例 1: 123&amp;gt; 输入: 4&amp;gt; 输出: 2&amp;gt;   示例 2: 12345&amp;gt; 输入: 8&amp;gt; 输出: 2&amp;gt; 说明: 8 的平方根是 2.82842..., &amp;gt;      由于返回类型是整数">
@@ -363,7 +363,7 @@
                   <span class="post-meta-item-text">字数统计</span>
                 
                 <span title="字数统计">
-                  205 字
+                  219 字
                 </span>
               
 
@@ -412,6 +412,7 @@
 <a id="more"></a>
 <h3 id="解题思路："><a href="#解题思路：" class="headerlink" title="解题思路："></a>解题思路：</h3><blockquote>
 <p>牛顿法求平方<br>   一个数为x：<br>​    x1 = x / 2；<br>​    x2 = (x1 + x / x1) / 2;<br>​    x1 - x2 &gt; 0.001<br>​    x3 = (x2 + x / x1) / 2;<br>​    x2 - x3 &gt; 0.001时在循环<br>​    一直到 &lt; 0.001结束</p>
+<p>时间复杂度: $O(n)$, 空间复杂度: $O(1)$.</p>
 </blockquote>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">mySqrt</span><span class="params">(<span class="keyword">int</span> x)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(x == <span class="number">1</span> || x == <span class="number">0</span>)</span><br><span class="line">            <span class="keyword">return</span> x;</span><br><span class="line">        <span class="keyword">double</span> x1 = x,x2 = x / <span class="number">2</span>;</span><br><span class="line">       </span><br><span class="line">        <span class="keyword">while</span>(<span class="built_in">abs</span>(x1 - x2) &gt; <span class="number">0.001</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            x1 = x2;</span><br><span class="line">            x2 = (x1 + x / x1) / <span class="number">2</span>;</span><br><span class="line">           </span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> (<span class="keyword">int</span>)x2;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 
@@ -438,6 +439,8 @@
         <div class="post-tags">
           
             <a href="/tags/leetcode/" rel="tag"># leetcode</a>
+          
+            <a href="/tags/other/" rel="tag"># other</a>
           
         </div>
       
@@ -532,7 +535,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/index.html">
-                <span class="site-state-item-count">28</span>
+                <span class="site-state-item-count">31</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -554,7 +557,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-count">9</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
