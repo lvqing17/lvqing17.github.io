@@ -87,18 +87,18 @@
 
 
 
-<meta name="description" content="题目描述： 操作给定的二叉树，将其变换为源二叉树的镜像。 输入描述:12345678910111213&amp;gt; 二叉树的镜像定义：源二叉树 &amp;gt;     	    8&amp;gt;     	   /  \&amp;gt;     	  6   10&amp;gt;     	 / \  / \&amp;gt;     	5  7 9 11&amp;gt;     	镜像二叉树&amp;gt;     	    8&amp;gt;">
+<meta name="description" content="题目描述： 操作给定的二叉树，将其变换为源二叉树的镜像。 输入描述:12345678910111213&amp;gt; 二叉树的镜像定义：源二叉树 &amp;gt;     	    8&amp;gt;     	   /  \&amp;gt;     	  6   10&amp;gt;     	 / \  / \&amp;gt;     	5  7 9  11&amp;gt;     	镜像二叉树&amp;gt;     	    8&amp;gt;">
 <meta name="keywords" content="tree,剑指Offer">
 <meta property="og:type" content="article">
 <meta property="og:title" content="剑指Offer之二叉树的镜像">
 <meta property="og:url" content="http://yoursite.com/2019/03/21/剑指Offer之二叉树的镜像/index.html">
 <meta property="og:site_name" content="晴宝">
-<meta property="og:description" content="题目描述： 操作给定的二叉树，将其变换为源二叉树的镜像。 输入描述:12345678910111213&amp;gt; 二叉树的镜像定义：源二叉树 &amp;gt;     	    8&amp;gt;     	   /  \&amp;gt;     	  6   10&amp;gt;     	 / \  / \&amp;gt;     	5  7 9 11&amp;gt;     	镜像二叉树&amp;gt;     	    8&amp;gt;">
+<meta property="og:description" content="题目描述： 操作给定的二叉树，将其变换为源二叉树的镜像。 输入描述:12345678910111213&amp;gt; 二叉树的镜像定义：源二叉树 &amp;gt;     	    8&amp;gt;     	   /  \&amp;gt;     	  6   10&amp;gt;     	 / \  / \&amp;gt;     	5  7 9  11&amp;gt;     	镜像二叉树&amp;gt;     	    8&amp;gt;">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-03-21T13:01:28.558Z">
+<meta property="og:updated_time" content="2019-03-28T03:23:45.057Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="剑指Offer之二叉树的镜像">
-<meta name="twitter:description" content="题目描述： 操作给定的二叉树，将其变换为源二叉树的镜像。 输入描述:12345678910111213&amp;gt; 二叉树的镜像定义：源二叉树 &amp;gt;     	    8&amp;gt;     	   /  \&amp;gt;     	  6   10&amp;gt;     	 / \  / \&amp;gt;     	5  7 9 11&amp;gt;     	镜像二叉树&amp;gt;     	    8&amp;gt;">
+<meta name="twitter:description" content="题目描述： 操作给定的二叉树，将其变换为源二叉树的镜像。 输入描述:12345678910111213&amp;gt; 二叉树的镜像定义：源二叉树 &amp;gt;     	    8&amp;gt;     	   /  \&amp;gt;     	  6   10&amp;gt;     	 / \  / \&amp;gt;     	5  7 9  11&amp;gt;     	镜像二叉树&amp;gt;     	    8&amp;gt;">
 
 
 
@@ -400,7 +400,7 @@
       
         <h3 id="题目描述："><a href="#题目描述：" class="headerlink" title="题目描述："></a>题目描述：</h3><blockquote>
 <p>操作给定的二叉树，将其变换为源二叉树的镜像。</p>
-<h2 id="输入描述"><a href="#输入描述" class="headerlink" title="输入描述:"></a>输入描述:</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&gt; 二叉树的镜像定义：源二叉树 </span><br><span class="line">&gt;     	    <span class="number">8</span></span><br><span class="line">&gt;     	   /  \</span><br><span class="line">&gt;     	  <span class="number">6</span>   <span class="number">10</span></span><br><span class="line">&gt;     	 / \  / \</span><br><span class="line">&gt;     	<span class="number">5</span>  <span class="number">7</span> <span class="number">9</span> <span class="number">11</span></span><br><span class="line">&gt;     	镜像二叉树</span><br><span class="line">&gt;     	    <span class="number">8</span></span><br><span class="line">&gt;     	   /  \</span><br><span class="line">&gt;     	  <span class="number">10</span>   <span class="number">6</span></span><br><span class="line">&gt;     	 / \  / \</span><br><span class="line">&gt;     	<span class="number">11</span> <span class="number">9</span> <span class="number">7</span>  <span class="number">5</span></span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+<h2 id="输入描述"><a href="#输入描述" class="headerlink" title="输入描述:"></a>输入描述:</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&gt; 二叉树的镜像定义：源二叉树 </span><br><span class="line">&gt;     	    <span class="number">8</span></span><br><span class="line">&gt;     	   /  \</span><br><span class="line">&gt;     	  <span class="number">6</span>   <span class="number">10</span></span><br><span class="line">&gt;     	 / \  / \</span><br><span class="line">&gt;     	<span class="number">5</span>  <span class="number">7</span> <span class="number">9</span>  <span class="number">11</span></span><br><span class="line">&gt;     	镜像二叉树</span><br><span class="line">&gt;     	    <span class="number">8</span></span><br><span class="line">&gt;     	   /  \</span><br><span class="line">&gt;     	  <span class="number">10</span>   <span class="number">6</span></span><br><span class="line">&gt;     	 / \  / \</span><br><span class="line">&gt;     	<span class="number">11</span> <span class="number">9</span> <span class="number">7</span>   <span class="number">5</span></span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
 </blockquote>
 <a id="more"></a>
 <h3 id="解题思路："><a href="#解题思路：" class="headerlink" title="解题思路："></a>解题思路：</h3><blockquote>
@@ -527,7 +527,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/index.html">
-                <span class="site-state-item-count">52</span>
+                <span class="site-state-item-count">55</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
