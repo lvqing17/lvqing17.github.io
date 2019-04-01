@@ -1,0 +1,830 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="机器学习,">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="https://blog-1253453438.cos.ap-beijing.myqcloud.com/hexo_icon/L_0(%E5%B7%B2%E5%8E%BB%E5%BA%95).png?v=5.1.0">
+
+
+
+
+
+
+<meta name="description" content="监督学习： 监督学习任务：回归 (用于预测某个值)  和 分类 (用于预测某个分类) 常见模型：K邻近值算法、线性回归、逻辑回归、支持向量机(SVM)、决策树和随机森林、神经网络  回归： 线性回归：线性模型更一般化的描述指通过计算输入变量的加权和，并加上一个常数偏置项（截距项）来得到一个预测值。 逻辑回归：  线性回归：  1234from sklearn.linear_model import">
+<meta name="keywords" content="机器学习">
+<meta property="og:type" content="article">
+<meta property="og:title" content="监督学习">
+<meta property="og:url" content="http://yoursite.com/2019/03/29/机器学习_监督学习/index.html">
+<meta property="og:site_name" content="晴宝">
+<meta property="og:description" content="监督学习： 监督学习任务：回归 (用于预测某个值)  和 分类 (用于预测某个分类) 常见模型：K邻近值算法、线性回归、逻辑回归、支持向量机(SVM)、决策树和随机森林、神经网络  回归： 线性回归：线性模型更一般化的描述指通过计算输入变量的加权和，并加上一个常数偏置项（截距项）来得到一个预测值。 逻辑回归：  线性回归：  1234from sklearn.linear_model import">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://hand2st.apachecn.org/images/tex-2554a2bb846cffd697389e5dc8912759.gif">
+<meta property="og:updated_time" content="2019-03-29T03:26:49.769Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="监督学习">
+<meta name="twitter:description" content="监督学习： 监督学习任务：回归 (用于预测某个值)  和 分类 (用于预测某个分类) 常见模型：K邻近值算法、线性回归、逻辑回归、支持向量机(SVM)、决策树和随机森林、神经网络  回归： 线性回归：线性模型更一般化的描述指通过计算输入变量的加权和，并加上一个常数偏置项（截距项）来得到一个预测值。 逻辑回归：  线性回归：  1234from sklearn.linear_model import">
+<meta name="twitter:image" content="https://hand2st.apachecn.org/images/tex-2554a2bb846cffd697389e5dc8912759.gif">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 'undefined',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/03/29/机器学习_监督学习/">
+
+
+
+
+
+  <title> 监督学习 | 晴宝 </title>
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+ 
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+  
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+	<a target="_blank" href="https://github.com/lvqing17"><img style="position: absolute; top: 0; left: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_left_gray_6d6d6d.png" alt="Fork me on GitHub"></a>
+
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">晴宝</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">吃饱好减肥</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/index.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/index.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/index.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/index.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope="" itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/03/29/机器学习_监督学习/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="晴宝宝">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://blog-1253453438.cos.ap-beijing.myqcloud.com/hexo_icon/lq.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="晴宝">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                监督学习
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-29T10:04:21+08:00">
+                2019-03-29
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/机器学习/" itemprop="url" rel="index">
+                    <span itemprop="name">机器学习</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  1.1k 字
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长" }}"="">
+                  4 分钟
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="监督学习："><a href="#监督学习：" class="headerlink" title="监督学习："></a>监督学习：</h3><blockquote>
+<p>监督学习任务：回归 (用于预测某个值)  和 分类 (用于预测某个分类)</p>
+<p>常见模型：K邻近值算法、线性回归、逻辑回归、支持向量机(SVM)、决策树和随机森林、神经网络</p>
+</blockquote>
+<h4 id="回归："><a href="#回归：" class="headerlink" title="回归："></a>回归：</h4><blockquote>
+<p>线性回归：线性模型更一般化的描述指通过计算输入变量的加权和，并加上一个常数偏置项（截距项）来得到一个预测值。</p>
+<p>逻辑回归：</p>
+</blockquote>
+<h5 id="线性回归："><a href="#线性回归：" class="headerlink" title="线性回归："></a>线性回归：</h5><blockquote>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.linear_model <span class="keyword">import</span> LinearRegression</span><br><span class="line">lin_reg = LinearRegression()</span><br><span class="line">lin_reg.fit(X,y)</span><br><span class="line">lin_reg.predict(X_new)</span><br></pre></td></tr></table></figure>
+<h4 id="分类："><a href="#分类：" class="headerlink" title="分类："></a>分类：</h4><blockquote>
+<p>二分类：SVM、线性分类</p>
+<p>多分类：随机森林、朴素贝叶斯</p>
+</blockquote>
+<h5 id="梯度下降（GD）："><a href="#梯度下降（GD）：" class="headerlink" title="梯度下降（GD）："></a>梯度下降（GD）：</h5><blockquote>
+<p>梯度下降的整体思路是通过的迭代来逐渐调整参数使得损失函数达到最小值。</p>
+<p>假设浓雾下，你迷失在了大山中，你只能感受到自己脚下的坡度。为了最快到达山底，一个最好的方法就是沿着坡度最陡的地方下山。这其实就是梯度下降所做的：它计算误差函数关于参数向量                 的局部梯度，同时它沿着梯度下降的方向进行下一次迭代。当梯度值为零的时候，就达到了误差函数最小值 。</p>
+<p>具体来说，开始时，需要选定一个随机的<img src="https://hand2st.apachecn.org/images/tex-2554a2bb846cffd697389e5dc8912759.gif" alt="\theta">（这个值称为随机初始值），然后逐渐去改进它，每一次变化一小步，每一步都试着降低损失函数（例如：均方差损失函数），直到算法收敛到一个最小值。</p>
+<p>在梯度下降中一个重要的参数是步长，超参数学习率的值决定了步长的大小。如果学习率太小，必须经过多次迭代，算法才能收敛，这是非常耗时的。</p>
+<p>另一方面，如果学习率太大，你将跳过最低点，到达山谷的另一面，可能下一次的值比上一次还要大。这可能使的算法是发散的，函数值变得越来越大，永远不可能找到一个好的答案。</p>
+<p>常见模型: 批量梯度下降（Batch GD）、小批量梯度下降（Mini-batch GD）、随机梯度下降（Stochastic GD）</p>
+</blockquote>
+<h6 id="批量梯度下降-Batch-GD"><a href="#批量梯度下降-Batch-GD" class="headerlink" title="批量梯度下降(Batch GD):"></a>批量梯度下降(Batch GD):</h6><blockquote>
+<p>批量梯度下降的最要问题是计算每一步的梯度时都需要使用整个训练集，这导致在规模较大的数据集上，其会变得非常的慢。与其完全相反的随机梯度下降，在每一步的梯度计算上只随机选取训练集中的一个样本。很明显，由于每一次的操作都使用了非常少的数据，这样使得算法变得非常快。由于每一次迭代，只需要在内存中有一个实例，这使随机梯度算法可以在大规模训练集上使用。</p>
+</blockquote>
+<h6 id="随机梯度下降分类器-SGD-："><a href="#随机梯度下降分类器-SGD-：" class="headerlink" title="随机梯度下降分类器(SGD)："></a>随机梯度下降分类器(SGD)：</h6><blockquote>
+<p>这个分类器有一个好处是能够高效地处理非常大的数据集。这部分原因在于SGD一次只处理一条数据，这也使得 SGD 适合在线学习（online learning）。</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.linear_model <span class="keyword">import</span> SGDClassifier</span><br><span class="line">sgd_clf = SGDClassifier(random_state=<span class="number">42</span>)</span><br><span class="line">sgd_clf.fit(X_train, y_train_5)</span><br></pre></td></tr></table></figure>
+<h6 id="小批量梯度下降-Mini-batch-GD"><a href="#小批量梯度下降-Mini-batch-GD" class="headerlink" title="小批量梯度下降(Mini-batch GD):"></a>小批量梯度下降(Mini-batch GD):</h6><blockquote>
+<p>在迭代的每一步，批量梯度使用整个训练集，随机梯度时候用仅仅一个实例，在小批量梯度下降中，它则使用一个随机的小型实例集。它比随机梯度的主要优点在于你可以通过矩阵运算的硬件优化得到一个较好的训练表现，尤其当你使用 GPU 进行运算的时候。</p>
+</blockquote>
+<h5 id="支持向量机-SVM-："><a href="#支持向量机-SVM-：" class="headerlink" title="支持向量机(SVM)："></a>支持向量机(SVM)：</h5><blockquote>
+<p>支持向量机（SVM）是个非常强大并且有多种功能的机器学习模型，能够做线性或者非线性的分类，回归，甚至异常值检测。</p>
+<p>SVM 特别适合应用于复杂但中小规模数据集的分类问题。</p>
+</blockquote>
+<h6 id="线性支持向量机："><a href="#线性支持向量机：" class="headerlink" title="线性支持向量机："></a>线性支持向量机：</h6><blockquote>
+<p>以下的 Scikit-Learn 代码加载了内置的鸢尾花（Iris）数据集，缩放特征，并训练一个线性 SVM 模型(使用LinearSVM类，超参数 C = 1，hinge 损失函数)来检测 Virginica 鸢尾花。</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">from</span> sklearn <span class="keyword">import</span> datasets</span><br><span class="line"><span class="keyword">from</span> sklearn.pipeline <span class="keyword">import</span> Pipeline</span><br><span class="line"><span class="keyword">from</span> sklearn.preprocessing <span class="keyword">import</span> StandardScaler</span><br><span class="line"><span class="keyword">from</span> sklearn.svm <span class="keyword">import</span> LinearSVC</span><br><span class="line"></span><br><span class="line">iris = datasets.load_iris()</span><br><span class="line">X = iris[<span class="string">"data"</span>][:, (<span class="number">2</span>, <span class="number">3</span>)] <span class="comment"># petal length, petal width</span></span><br><span class="line">y = (iris[<span class="string">"target"</span>] == <span class="number">2</span>).astype(np.float64) <span class="comment"># Iris-Virginica</span></span><br><span class="line"></span><br><span class="line">svm_clf = Pipeline((</span><br><span class="line">        (<span class="string">"scaler"</span>, StandardScaler()),</span><br><span class="line">        (<span class="string">"linear_svc"</span>, LinearSVC(C=<span class="number">1</span>, loss=<span class="string">"hinge"</span>)),</span><br><span class="line">    ))</span><br><span class="line"></span><br><span class="line">svm_clf.fit(X, y)</span><br><span class="line"></span><br><span class="line">Then, <span class="keyword">as</span> usual, you can use the model to make predictions:</span><br><span class="line"></span><br><span class="line"> svm_clf.predict([[<span class="number">5.5</span>, <span class="number">1.7</span>]])</span><br><span class="line">array([ <span class="number">1.</span>])</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/机器学习/" rel="tag"># 机器学习</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/03/28/leetcode之112-路径总和/" rel="next" title="leetcode之112. 路径总和">
+                <i class="fa fa-chevron-left"></i> leetcode之112. 路径总和
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/03/29/剑指Offer之字符流中第一个不重复的字符/" rel="prev" title="剑指Offer之字符流中第一个不重复的字符">
+                剑指Offer之字符流中第一个不重复的字符 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="https://blog-1253453438.cos.ap-beijing.myqcloud.com/hexo_icon/lq.jpg" alt="晴宝宝">
+          <p class="site-author-name" itemprop="name">晴宝宝</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/index.html">
+                <span class="site-state-item-count">68</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/lvqing17" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#监督学习："><span class="nav-number">1.</span> <span class="nav-text">监督学习：</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#回归："><span class="nav-number">1.1.</span> <span class="nav-text">回归：</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#线性回归："><span class="nav-number">1.1.1.</span> <span class="nav-text">线性回归：</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#分类："><span class="nav-number">1.2.</span> <span class="nav-text">分类：</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#梯度下降（GD）："><span class="nav-number">1.2.1.</span> <span class="nav-text">梯度下降（GD）：</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#批量梯度下降-Batch-GD"><span class="nav-number">1.2.1.1.</span> <span class="nav-text">批量梯度下降(Batch GD):</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#随机梯度下降分类器-SGD-："><span class="nav-number">1.2.1.2.</span> <span class="nav-text">随机梯度下降分类器(SGD)：</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#小批量梯度下降-Mini-batch-GD"><span class="nav-number">1.2.1.3.</span> <span class="nav-text">小批量梯度下降(Mini-batch GD):</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#支持向量机-SVM-："><span class="nav-number">1.2.2.</span> <span class="nav-text">支持向量机(SVM)：</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#线性支持向量机："><span class="nav-number">1.2.2.1.</span> <span class="nav-text">线性支持向量机：</span></a></li></ol></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy;  2017 - 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">晴宝宝</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+  
+  <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+  
+
+
+  
+  
+  
+  <script type="text/javascript" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js"></script>
+  
+
+</body>
+</html>

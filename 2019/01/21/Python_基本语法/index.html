@@ -1,0 +1,864 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="Python,">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="https://blog-1253453438.cos.ap-beijing.myqcloud.com/hexo_icon/L_0(%E5%B7%B2%E5%8E%BB%E5%BA%95).png?v=5.1.0">
+
+
+
+
+
+
+<meta name="description" content="Python基础语法Boolean and its Opeations1234567891011# Boolean and its Operationsprint(type(True))print(type(False))print(type(None))# 输出如下所示：&quot;&quot;&quot;&amp;lt;class &apos;bool&apos;&amp;gt;&amp;lt;class &apos;bool&apos;&amp;gt;&amp;lt;class &apos;NoneType&apos;">
+<meta name="keywords" content="Python">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Python基础语法">
+<meta property="og:url" content="http://yoursite.com/2019/01/21/Python_基本语法/index.html">
+<meta property="og:site_name" content="晴宝">
+<meta property="og:description" content="Python基础语法Boolean and its Opeations1234567891011# Boolean and its Operationsprint(type(True))print(type(False))print(type(None))# 输出如下所示：&quot;&quot;&quot;&amp;lt;class &apos;bool&apos;&amp;gt;&amp;lt;class &apos;bool&apos;&amp;gt;&amp;lt;class &apos;NoneType&apos;">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-03-29T02:06:54.128Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Python基础语法">
+<meta name="twitter:description" content="Python基础语法Boolean and its Opeations1234567891011# Boolean and its Operationsprint(type(True))print(type(False))print(type(None))# 输出如下所示：&quot;&quot;&quot;&amp;lt;class &apos;bool&apos;&amp;gt;&amp;lt;class &apos;bool&apos;&amp;gt;&amp;lt;class &apos;NoneType&apos;">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 'undefined',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/01/21/Python_基本语法/">
+
+
+
+
+
+  <title> Python基础语法 | 晴宝 </title>
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+ 
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+  
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+	<a target="_blank" href="https://github.com/lvqing17"><img style="position: absolute; top: 0; left: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_left_gray_6d6d6d.png" alt="Fork me on GitHub"></a>
+
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">晴宝</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">吃饱好减肥</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/index.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/index.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/index.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/index.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope="" itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/01/21/Python_基本语法/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="晴宝宝">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://blog-1253453438.cos.ap-beijing.myqcloud.com/hexo_icon/lq.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="晴宝">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Python基础语法
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-01-21T16:55:34+08:00">
+                2019-01-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/Python/" itemprop="url" rel="index">
+                    <span itemprop="name">Python</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  1.8k 字
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长" }}"="">
+                  10 分钟
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="Python基础语法"><a href="#Python基础语法" class="headerlink" title="Python基础语法"></a>Python基础语法</h3><h4 id="Boolean-and-its-Opeations"><a href="#Boolean-and-its-Opeations" class="headerlink" title="Boolean and its Opeations"></a>Boolean and its Opeations</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Boolean and its Operations</span></span><br><span class="line">print(type(<span class="keyword">True</span>))</span><br><span class="line">print(type(<span class="keyword">False</span>))</span><br><span class="line">print(type(<span class="keyword">None</span>))</span><br><span class="line"></span><br><span class="line"><span class="comment"># 输出如下所示：</span></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="string">&lt;class 'bool'&gt;</span></span><br><span class="line"><span class="string">&lt;class 'bool'&gt;</span></span><br><span class="line"><span class="string">&lt;class 'NoneType'&gt;</span></span><br><span class="line"><span class="string">"""</span></span><br></pre></td></tr></table></figure>
+<a id="more"></a>
+<h4 id="And-Or"><a href="#And-Or" class="headerlink" title="And  Or"></a>And  Or</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># and or</span></span><br><span class="line">B = <span class="keyword">True</span></span><br><span class="line">A = <span class="keyword">False</span></span><br><span class="line"></span><br><span class="line">print(B <span class="keyword">and</span> <span class="keyword">True</span>)</span><br><span class="line">print(A <span class="keyword">or</span> B)</span><br><span class="line">print(<span class="keyword">not</span> B)</span><br><span class="line">print(<span class="keyword">not</span> A)</span><br><span class="line">print(B <span class="keyword">and</span> (<span class="keyword">not</span> A))</span><br><span class="line"></span><br><span class="line"><span class="comment"># 输出如下所示：</span></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="string">True</span></span><br><span class="line"><span class="string">True</span></span><br><span class="line"><span class="string">False</span></span><br><span class="line"><span class="string">True</span></span><br><span class="line"><span class="string">True</span></span><br><span class="line"><span class="string">"""</span></span><br></pre></td></tr></table></figure>
+<h4 id="Expressions-can-evaluate-to-a-boolean-value"><a href="#Expressions-can-evaluate-to-a-boolean-value" class="headerlink" title="Expressions can evaluate to a boolean value"></a>Expressions can evaluate to a boolean value</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Expressions can evaluate to a boolean value</span></span><br><span class="line">print(<span class="number">3</span> &gt;= <span class="number">2</span>)</span><br><span class="line">print(<span class="number">2</span> &gt;= <span class="number">2</span>)</span><br><span class="line">print(A <span class="keyword">is</span> A)</span><br><span class="line">print(A <span class="keyword">is</span> B)</span><br><span class="line">print(<span class="number">3</span> != <span class="number">2</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 输出如下所示：</span></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="string">True</span></span><br><span class="line"><span class="string">True</span></span><br><span class="line"><span class="string">True</span></span><br><span class="line"><span class="string">False</span></span><br><span class="line"><span class="string">True</span></span><br><span class="line"><span class="string">"""</span></span><br></pre></td></tr></table></figure>
+<h4 id="Integer-and-floats"><a href="#Integer-and-floats" class="headerlink" title="Integer and floats"></a>Integer and floats</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Integer and floats</span></span><br><span class="line">print(type(<span class="number">3</span>))</span><br><span class="line">print(type(<span class="number">3.0</span>))</span><br><span class="line"></span><br><span class="line"><span class="comment"># 输出如下所示：</span></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="string">&lt;class 'int'&gt;</span></span><br><span class="line"><span class="string">&lt;class 'float'&gt;</span></span><br><span class="line"><span class="string">"""</span></span><br></pre></td></tr></table></figure>
+<h4 id="Numerical-operations"><a href="#Numerical-operations" class="headerlink" title="Numerical operations"></a>Numerical operations</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Numerical operations</span></span><br><span class="line"><span class="keyword">import</span> math</span><br><span class="line"></span><br><span class="line">print(<span class="number">3</span> / <span class="number">2</span>)</span><br><span class="line">print(<span class="number">5</span> // <span class="number">2</span>)</span><br><span class="line">print(<span class="number">3</span> % <span class="number">2</span>)</span><br><span class="line">print(float(<span class="number">3</span>))</span><br><span class="line">print(pow(<span class="number">2</span>, <span class="number">3</span>))</span><br><span class="line">print(math.ceil(<span class="number">3.4</span>))</span><br><span class="line">print(math.floor(<span class="number">3.4</span>))</span><br><span class="line">print(round(<span class="number">3.1415926</span>, <span class="number">2</span>))</span><br><span class="line"></span><br><span class="line"><span class="comment"># 输出如下所示：</span></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="string">1.5</span></span><br><span class="line"><span class="string">2</span></span><br><span class="line"><span class="string">1</span></span><br><span class="line"><span class="string">3.0</span></span><br><span class="line"><span class="string">8</span></span><br><span class="line"><span class="string">4</span></span><br><span class="line"><span class="string">3</span></span><br><span class="line"><span class="string">3.14</span></span><br><span class="line"><span class="string">"""</span></span><br></pre></td></tr></table></figure>
+<h4 id="String"><a href="#String" class="headerlink" title="String"></a>String</h4><blockquote>
+<ul>
+<li>strings are useful because they are immutable（它们不可变）</li>
+</ul>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># String</span></span><br><span class="line">Introduction = <span class="string">'Today is 2019-01-21'</span></span><br><span class="line">print(Introduction)</span><br><span class="line">print(str(<span class="number">3</span>))</span><br><span class="line">print(int(<span class="string">'3'</span>))</span><br><span class="line">print(str(<span class="string">"b'AS"</span>))</span><br><span class="line"></span><br><span class="line"><span class="comment"># String Method</span></span><br><span class="line">A = <span class="string">'abc'</span></span><br><span class="line">print(A.capitalize())</span><br><span class="line">print(A.upper())</span><br><span class="line">print(A.find(<span class="string">'b'</span>))</span><br><span class="line">print(A.find(<span class="string">'d'</span>))</span><br><span class="line"></span><br><span class="line"><span class="comment"># String formatting</span></span><br><span class="line">s = <span class="string">'My name is Tom'</span></span><br><span class="line">name = <span class="string">'Tomas'</span></span><br><span class="line">age = <span class="number">25</span></span><br><span class="line">score = <span class="number">98.532421</span></span><br><span class="line">print(<span class="string">'hello, my name is %s and I am %d years old\n \ I scored %f on my midterm'</span>%(name, age, score))</span><br><span class="line">print(<span class="string">'hello, my name is %s and I am %d years old\n \</span></span><br><span class="line"><span class="string">I scored %.2f on my midterm'</span>%(name, age, score))</span><br><span class="line"></span><br><span class="line"><span class="comment"># 输出如下所示：</span></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="string">Today is 2019-01-21</span></span><br><span class="line"><span class="string">3</span></span><br><span class="line"><span class="string">3</span></span><br><span class="line"><span class="string">b'AS</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">Abc</span></span><br><span class="line"><span class="string">ABC</span></span><br><span class="line"><span class="string">1</span></span><br><span class="line"><span class="string">-1</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">hello, my name is Tomas and I am 25 years old</span></span><br><span class="line"><span class="string"> \ I scored 98.532421 on my midterm</span></span><br><span class="line"><span class="string">hello, my name is Tomas and I am 25 years old</span></span><br><span class="line"><span class="string"> I scored 98.53 on my midterm</span></span><br><span class="line"><span class="string">"""</span></span><br></pre></td></tr></table></figure>
+<h4 id="List"><a href="#List" class="headerlink" title="List"></a>List</h4><blockquote>
+<ul>
+<li>Mutable（可变的）</li>
+<li>Iterable</li>
+<li>Sequence Type</li>
+</ul>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># List </span></span><br><span class="line"><span class="comment"># Create and Modify list</span></span><br><span class="line">A = []</span><br><span class="line">A.append(<span class="number">1</span>)</span><br><span class="line">A</span><br><span class="line"><span class="comment"># List index and Slicing</span></span><br><span class="line"><span class="comment"># length = n, start from 0 and end at (n-1)</span></span><br><span class="line">A = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>]</span><br><span class="line">print(len(A))</span><br><span class="line">print(A[<span class="number">0</span>])</span><br><span class="line">A[<span class="number">0</span>] = <span class="number">100</span></span><br><span class="line">print(A[<span class="number">0</span>])</span><br><span class="line">A[<span class="number">1</span>:<span class="number">4</span>]</span><br><span class="line">print(A[<span class="number">1</span>:<span class="number">4</span>])  <span class="comment"># 不会输出索引4的数</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># What exactly is "iterable"?</span></span><br><span class="line"><span class="keyword">for</span> item <span class="keyword">in</span> A[<span class="number">2</span>:<span class="number">5</span>]:</span><br><span class="line">    print(item)</span><br><span class="line">A = [<span class="number">1</span>, <span class="number">2</span>]</span><br><span class="line">A.append(<span class="string">'2'</span>)</span><br><span class="line">print(A)</span><br><span class="line">A[<span class="number">0</span>] = <span class="string">'s'</span></span><br><span class="line">print(A)</span><br><span class="line">print(list(<span class="string">'abc'</span>) )</span><br><span class="line"></span><br><span class="line"><span class="comment"># 输出如下所示：</span></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="string">6</span></span><br><span class="line"><span class="string">1</span></span><br><span class="line"><span class="string">100</span></span><br><span class="line"><span class="string">[2, 3, 4]</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">3</span></span><br><span class="line"><span class="string">4</span></span><br><span class="line"><span class="string">5</span></span><br><span class="line"><span class="string">[1, 2, '2']</span></span><br><span class="line"><span class="string">['s', 2, '2']</span></span><br><span class="line"><span class="string">['a', 'b', 'c']</span></span><br><span class="line"><span class="string">"""</span></span><br></pre></td></tr></table></figure>
+<h4 id="Method-and-Function"><a href="#Method-and-Function" class="headerlink" title="Method and Function"></a>Method and Function</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Method</span></span><br><span class="line">A = list((<span class="number">2</span>, <span class="number">1</span>, <span class="number">3</span>))</span><br><span class="line">print(A)</span><br><span class="line">A.sort(reverse = <span class="keyword">True</span>) <span class="comment"># A的值发生了改变</span></span><br><span class="line">print(A)</span><br><span class="line"><span class="comment"># Function</span></span><br><span class="line">print(sorted(A))  <span class="comment"># A的值没有改变</span></span><br><span class="line">print(A)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 输出如下所示：</span></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="string">[2, 1, 3]</span></span><br><span class="line"><span class="string">[3, 2, 1]</span></span><br><span class="line"><span class="string">[1, 2, 3]</span></span><br><span class="line"><span class="string">[3, 2, 1]</span></span><br><span class="line"><span class="string">"""</span></span><br></pre></td></tr></table></figure>
+<h4 id="Tuple"><a href="#Tuple" class="headerlink" title="Tuple"></a>Tuple</h4><blockquote>
+<ul>
+<li>Similar to list 和list类似</li>
+<li>But it is immutable(hashable) 但它是不可变的 support for hash(), a built-in function</li>
+<li>Can have repeated value可以有重复的元素</li>
+<li>Sequence Type</li>
+</ul>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Tuple</span></span><br><span class="line"><span class="comment"># Create Tuple</span></span><br><span class="line">A = tuple([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">2</span>])</span><br><span class="line">print(A)</span><br><span class="line">print(A[<span class="number">0</span>])</span><br><span class="line">print(A[<span class="number">2</span>:<span class="number">4</span>])</span><br><span class="line">print(A[:<span class="number">4</span>])</span><br><span class="line">print(A[::])</span><br><span class="line">print(A[:<span class="number">-1</span>])</span><br><span class="line">B = tuple([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>])</span><br><span class="line">print(B[::<span class="number">-1</span>])</span><br><span class="line"></span><br><span class="line">A[<span class="number">0</span>] = <span class="string">'s'</span></span><br><span class="line">print(A)</span><br><span class="line"></span><br><span class="line">C = tuple()</span><br><span class="line">print(C)</span><br><span class="line">C = <span class="number">1</span>,</span><br><span class="line">print(C)</span><br><span class="line">D = (<span class="number">1</span>)</span><br><span class="line">print(type(D))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 输出如下所示：</span></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="string">(1, 2, 3, 2)</span></span><br><span class="line"><span class="string">1</span></span><br><span class="line"><span class="string">(3, 2)</span></span><br><span class="line"><span class="string">(1, 2, 3, 2)</span></span><br><span class="line"><span class="string">(1, 2, 3, 2)</span></span><br><span class="line"><span class="string">(1, 2, 3)</span></span><br><span class="line"><span class="string">(4, 3, 2, 1)</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">A[0] = 's'</span></span><br><span class="line"><span class="string">TypeError: 'tuple' object does not support item assignment</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">()</span></span><br><span class="line"><span class="string">(1,)</span></span><br><span class="line"><span class="string">&lt;class 'int'&gt;</span></span><br><span class="line"><span class="string">"""</span></span><br></pre></td></tr></table></figure>
+<h4 id="Set"><a href="#Set" class="headerlink" title="Set"></a>Set</h4><blockquote>
+<ul>
+<li>Unordered 没有顺序</li>
+<li>Contain hashable elements( so it is again immutable) 里面的元素必须是hashable</li>
+<li>No repetition 没有重复</li>
+<li>Not a sequence type</li>
+</ul>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Set</span></span><br><span class="line">A = set([<span class="number">1</span>, <span class="number">1</span>, <span class="number">2</span>])</span><br><span class="line">B = set([<span class="string">'Michal'</span>, <span class="string">'Betty'</span>])</span><br><span class="line">print(A)</span><br><span class="line">print(len(A))</span><br><span class="line">print(B)</span><br><span class="line">print(len(B))</span><br><span class="line"></span><br><span class="line">C = set([<span class="number">1</span>], [<span class="number">2</span>])</span><br><span class="line">print(C)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Set Arithmetics</span></span><br><span class="line">A = set([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>])</span><br><span class="line">B = set([<span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>])</span><br><span class="line">print(<span class="string">'A intersects B'</span>)</span><br><span class="line">print(A &amp; B)</span><br><span class="line">print(<span class="string">'A unions B'</span>) </span><br><span class="line">print(A | B)</span><br><span class="line">print(<span class="string">'in A not in B'</span>)</span><br><span class="line">print(A - B)</span><br><span class="line">print(<span class="string">'add 5 into A'</span>)</span><br><span class="line">A.add(<span class="number">5</span>)</span><br><span class="line">print(A)</span><br><span class="line">print(<span class="string">'new A after adding 5'</span>)</span><br><span class="line">print(A)</span><br><span class="line">print(<span class="string">'remove 2 in A'</span>)</span><br><span class="line">A.remove(<span class="number">2</span>)</span><br><span class="line">print(A)</span><br><span class="line">print(<span class="string">'new A after reoving 2'</span>)</span><br><span class="line">print(A)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 输出如下所示：</span></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="string">&#123;1, 2&#125;</span></span><br><span class="line"><span class="string">2</span></span><br><span class="line"><span class="string">&#123;'Michal', 'Betty'&#125;</span></span><br><span class="line"><span class="string">2</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">C = set([1], [2])</span></span><br><span class="line"><span class="string">TypeError: set expected at most 1 arguments, got 2</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">A intersects B</span></span><br><span class="line"><span class="string">&#123;3&#125;</span></span><br><span class="line"><span class="string">A unions B</span></span><br><span class="line"><span class="string">&#123;1, 2, 3, 4, 5&#125;</span></span><br><span class="line"><span class="string">in A not in B</span></span><br><span class="line"><span class="string">&#123;1, 2&#125;</span></span><br><span class="line"><span class="string">add 5 into A</span></span><br><span class="line"><span class="string">&#123;1, 2, 3, 5&#125;</span></span><br><span class="line"><span class="string">new A after adding 5</span></span><br><span class="line"><span class="string">&#123;1, 2, 3, 5&#125;</span></span><br><span class="line"><span class="string">remove 2 in A</span></span><br><span class="line"><span class="string">&#123;1, 3, 5&#125;</span></span><br><span class="line"><span class="string">new A after reoving 2</span></span><br><span class="line"><span class="string">&#123;1, 3, 5&#125;</span></span><br><span class="line"><span class="string">"""</span></span><br></pre></td></tr></table></figure>
+<h4 id="Common-operations-on-List-Set-Tuple"><a href="#Common-operations-on-List-Set-Tuple" class="headerlink" title="Common operations on List, Set, Tuple"></a>Common operations on List, Set, Tuple</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Use tuple for demonstration here</span></span><br><span class="line">A = (<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>)</span><br><span class="line">print(len(A))</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> item <span class="keyword">in</span> A:</span><br><span class="line">    print(item)</span><br><span class="line"></span><br><span class="line">print(<span class="number">1</span> <span class="keyword">in</span> A)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 输出如下所示：</span></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="string">3</span></span><br><span class="line"><span class="string">1</span></span><br><span class="line"><span class="string">2</span></span><br><span class="line"><span class="string">3</span></span><br><span class="line"><span class="string">True</span></span><br><span class="line"><span class="string">"""</span></span><br></pre></td></tr></table></figure>
+<h4 id="Dictionary"><a href="#Dictionary" class="headerlink" title="Dictionary"></a>Dictionary</h4><blockquote>
+<ul>
+<li>Very fast for look up( O(1) compared to O(N) in list) 非常快</li>
+<li>Mapping Type (think of “Map” as “Match”) #### Keys</li>
+<li>Arbitary values 任意值</li>
+<li>Must be hashable(i.e. Immutable, will explain later) 必须是不变的</li>
+<li>We may also call them “index”(pandas) 有时候也称为index #### Values</li>
+<li>No restrictions, can be mutable 没有限制</li>
+</ul>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Dictionary</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">simple_function</span><span class="params">(a, b, c)</span>:</span></span><br><span class="line">    print(a)</span><br><span class="line">    print(b)</span><br><span class="line">    print(c)</span><br><span class="line"></span><br><span class="line">simple_function(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>)</span><br><span class="line">simple_function(c = <span class="number">3</span>, a = <span class="number">1</span>, b = <span class="number">2</span>)</span><br><span class="line">simple_function(<span class="number">1</span>, c = <span class="number">3</span>, b = <span class="number">2</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 输出如下所示：</span></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="string">1</span></span><br><span class="line"><span class="string">2</span></span><br><span class="line"><span class="string">3</span></span><br><span class="line"><span class="string">1</span></span><br><span class="line"><span class="string">2</span></span><br><span class="line"><span class="string">3</span></span><br><span class="line"><span class="string">1</span></span><br><span class="line"><span class="string">2</span></span><br><span class="line"><span class="string">3</span></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#### Create List 创建list</span></span><br><span class="line">midterm1 = &#123;<span class="string">'Michael'</span>: <span class="number">98</span>, <span class="string">'Betty'</span>: <span class="number">96</span>&#125;</span><br><span class="line">print(midterm1)</span><br><span class="line"></span><br><span class="line">final = dict() <span class="comment"># 一个空字典</span></span><br><span class="line">print(final)</span><br><span class="line"></span><br><span class="line">midterm2 = dict(Michael = <span class="number">98</span>, Betty = <span class="number">96</span>)</span><br><span class="line">print(midterm2)</span><br><span class="line"></span><br><span class="line">midterm3 = dict([(<span class="string">'Michael'</span>, <span class="number">98</span>), (<span class="string">'Betty'</span>, <span class="number">96</span>)])</span><br><span class="line">print(midterm3)</span><br><span class="line"></span><br><span class="line">print(midterm1 == midterm2 == midterm3)</span><br><span class="line"></span><br><span class="line">midterm4 = dict([(<span class="string">'Michael'</span>, <span class="number">98</span>), (<span class="string">'Betty'</span>, <span class="number">96</span>), (<span class="string">'Michael'</span>, <span class="number">90</span>)])</span><br><span class="line">print(midterm4)</span><br><span class="line"></span><br><span class="line">midterm1[<span class="string">'Michael'</span>] = <span class="number">97</span></span><br><span class="line">print(midterm1)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> key <span class="keyword">in</span> midterm1:</span><br><span class="line">    print(key)</span><br><span class="line"></span><br><span class="line">print(midterm1.keys())</span><br><span class="line">print(midterm1.values())</span><br><span class="line"></span><br><span class="line"><span class="comment"># 输出如下所示：</span></span><br><span class="line">&#123;<span class="string">'Michael'</span>: <span class="number">98</span>, <span class="string">'Betty'</span>: <span class="number">96</span>&#125;</span><br><span class="line">&#123;&#125;</span><br><span class="line">&#123;<span class="string">'Michael'</span>: <span class="number">98</span>, <span class="string">'Betty'</span>: <span class="number">96</span>&#125;</span><br><span class="line">&#123;<span class="string">'Michael'</span>: <span class="number">98</span>, <span class="string">'Betty'</span>: <span class="number">96</span>&#125;</span><br><span class="line"><span class="keyword">True</span></span><br><span class="line">&#123;<span class="string">'Michael'</span>: <span class="number">90</span>, <span class="string">'Betty'</span>: <span class="number">96</span>&#125;</span><br><span class="line">&#123;<span class="string">'Michael'</span>: <span class="number">97</span>, <span class="string">'Betty'</span>: <span class="number">96</span>&#125;</span><br><span class="line">Michael</span><br><span class="line">Betty</span><br><span class="line">dict_keys([<span class="string">'Michael'</span>, <span class="string">'Betty'</span>])</span><br><span class="line">dict_values([<span class="number">97</span>, <span class="number">96</span>])</span><br></pre></td></tr></table></figure>
+<h4 id="Ranges"><a href="#Ranges" class="headerlink" title="Ranges"></a>Ranges</h4><blockquote>
+<ul>
+<li>Start 开始</li>
+<li>Stop 结束</li>
+<li>Step 步的大小</li>
+</ul>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Ranges</span></span><br><span class="line">print(list(range(<span class="number">10</span>)))</span><br><span class="line">print(list(range(<span class="number">0</span>, <span class="number">10</span>, <span class="number">3</span>)))</span><br><span class="line">print(list(range(<span class="number">0</span>, <span class="number">-10</span>, <span class="number">-1</span>)))</span><br><span class="line">print(list(range(<span class="number">0</span>)))</span><br><span class="line">print(list(range(<span class="number">1</span>, <span class="number">0</span>)))</span><br><span class="line"></span><br><span class="line">r = range(<span class="number">10</span>)</span><br><span class="line">print(<span class="number">5</span> <span class="keyword">in</span> r)</span><br><span class="line">print(r[<span class="number">1</span>])</span><br><span class="line"></span><br><span class="line"><span class="comment"># 输出如下所示：</span></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="string">[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]</span></span><br><span class="line"><span class="string">[0, 3, 6, 9]</span></span><br><span class="line"><span class="string">[0, -1, -2, -3, -4, -5, -6, -7, -8, -9]</span></span><br><span class="line"><span class="string">[]</span></span><br><span class="line"><span class="string">[]</span></span><br><span class="line"><span class="string">True</span></span><br><span class="line"><span class="string">1</span></span><br><span class="line"><span class="string">"""</span></span><br></pre></td></tr></table></figure>
+<h4 id="Hashable"><a href="#Hashable" class="headerlink" title="Hashable"></a>Hashable</h4><blockquote>
+<ul>
+<li>map name strings to 15 integers</li>
+<li>red = a collision</li>
+<li>think of them as many buckets</li>
+<li>theoretically more than one items in every single bucket, but we say the look up is O(1)</li>
+</ul>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Hashable</span></span><br><span class="line">print(hash(<span class="string">'apple'</span>))</span><br><span class="line">print(hash(((<span class="number">1</span>, <span class="number">-1</span>, <span class="number">0</span>), (<span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>), (<span class="number">1</span>, <span class="number">0</span>, <span class="number">-1</span>))))</span><br><span class="line">print(hash(((<span class="number">1</span>, <span class="number">0</span>, <span class="number">-1</span>), (<span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>), (<span class="number">1</span>, <span class="number">-1</span>, <span class="number">0</span>))))</span><br><span class="line"></span><br><span class="line"><span class="comment"># 输出如下所示：</span></span><br><span class="line"><span class="number">-4061574024490551516</span></span><br><span class="line"><span class="number">-697649482279922733</span></span><br><span class="line"><span class="number">-697649482279922733</span></span><br></pre></td></tr></table></figure>
+<h4 id="Loop-and-Conditionals"><a href="#Loop-and-Conditionals" class="headerlink" title="Loop and Conditionals"></a>Loop and Conditionals</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># If Statement</span></span><br><span class="line">name = <span class="string">'Kesci'</span></span><br><span class="line"><span class="keyword">if</span> name == <span class="string">'Kesci'</span>:</span><br><span class="line">    print(name)</span><br><span class="line"></span><br><span class="line">tool = <span class="string">'Klab'</span></span><br><span class="line"><span class="keyword">if</span> tool != <span class="string">'Kesci'</span>:</span><br><span class="line">    print(tool)</span><br><span class="line">    </span><br><span class="line"><span class="comment"># Use Good Grammar for Efficiency</span></span><br><span class="line"><span class="comment"># if if if</span></span><br><span class="line"><span class="comment"># if elif else</span></span><br><span class="line">number = <span class="number">10</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">print_silly</span><span class="params">(x)</span>:</span></span><br><span class="line">    <span class="keyword">if</span> number == <span class="number">10</span>:</span><br><span class="line">        print(<span class="string">'checking the first one'</span>)</span><br><span class="line">        print(<span class="string">'equal to 10'</span>)</span><br><span class="line">    <span class="keyword">if</span> number &lt;= <span class="number">10</span>:</span><br><span class="line">        print(<span class="string">'checking the second one'</span>)</span><br><span class="line">        print(<span class="string">'no less than 10'</span>)</span><br><span class="line">    <span class="keyword">if</span> number &gt;= <span class="number">10</span>:</span><br><span class="line">        print(<span class="string">'checking the third one'</span>)</span><br><span class="line">        print(<span class="string">'no more than 10'</span>)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">print_clever</span><span class="params">(x)</span>:</span></span><br><span class="line">    <span class="keyword">if</span> number == <span class="number">10</span>:</span><br><span class="line">        print(<span class="string">'checking the first one'</span>)</span><br><span class="line">        print(<span class="string">'equal to 10'</span>)</span><br><span class="line">    <span class="keyword">elif</span> number &lt;= <span class="number">10</span>:</span><br><span class="line">        print(<span class="string">'checking the second one'</span>)</span><br><span class="line">        print(<span class="string">'no less than 10'</span>)</span><br><span class="line">    <span class="keyword">elif</span> number &gt;= <span class="number">10</span>:</span><br><span class="line">        print(<span class="string">'checking the third one'</span>)</span><br><span class="line">        print(<span class="string">'no more than 10'</span>)</span><br><span class="line"></span><br><span class="line">print_silly(<span class="number">10</span>)</span><br><span class="line">print_clever(<span class="number">10</span>)</span><br><span class="line">    </span><br><span class="line"> </span><br><span class="line"><span class="comment"># 输出如下所示：</span></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="string">Kesci</span></span><br><span class="line"><span class="string">Klab</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">checking the first one</span></span><br><span class="line"><span class="string">equal to 10</span></span><br><span class="line"><span class="string">checking the second one</span></span><br><span class="line"><span class="string">no less than 10</span></span><br><span class="line"><span class="string">checking the third one</span></span><br><span class="line"><span class="string">no more than 10</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">checking the first one</span></span><br><span class="line"><span class="string">equal to 10</span></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># For Loop</span></span><br><span class="line"><span class="comment"># When you know when to stop 当你知道你什么时候停止</span></span><br><span class="line">count = <span class="number">0</span></span><br><span class="line"><span class="keyword">for</span> number <span class="keyword">in</span> range(<span class="number">10</span>):</span><br><span class="line">    count = count + number</span><br><span class="line">    print(count)</span><br><span class="line">    </span><br><span class="line"><span class="comment"># 输出如下所示：</span></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="string">0</span></span><br><span class="line"><span class="string">1</span></span><br><span class="line"><span class="string">3</span></span><br><span class="line"><span class="string">6</span></span><br><span class="line"><span class="string">10</span></span><br><span class="line"><span class="string">15</span></span><br><span class="line"><span class="string">21</span></span><br><span class="line"><span class="string">28</span></span><br><span class="line"><span class="string">36</span></span><br><span class="line"><span class="string">45</span></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># While loop</span></span><br><span class="line"><span class="comment"># Interchangeable with for loop 可以和for loop互换</span></span><br><span class="line"><span class="comment"># Must use this one if you don't know when to stop 当你不知道什么时候停下来</span></span><br><span class="line"><span class="comment"># Easy to have bug( forever looping) if you forget to modify your condition 容易有bug</span></span><br><span class="line">unknown_condition = <span class="number">100</span></span><br><span class="line">my_number = <span class="number">10</span></span><br><span class="line"><span class="keyword">while</span> my_number &lt; unknown_condition:</span><br><span class="line">    my_number = my_number + <span class="number">10</span></span><br><span class="line">    print(my_number)</span><br><span class="line"></span><br><span class="line">print(<span class="string">'I am out of while loop now'</span>)</span><br><span class="line">print(my_number)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 输出如下所示：</span></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="string">20</span></span><br><span class="line"><span class="string">30</span></span><br><span class="line"><span class="string">40</span></span><br><span class="line"><span class="string">50</span></span><br><span class="line"><span class="string">60</span></span><br><span class="line"><span class="string">70</span></span><br><span class="line"><span class="string">80</span></span><br><span class="line"><span class="string">90</span></span><br><span class="line"><span class="string">100</span></span><br><span class="line"><span class="string">I am out of while loop now</span></span><br><span class="line"><span class="string">100</span></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Nest your if statement in your loops:</span></span><br><span class="line"><span class="comment"># Use indentation</span></span><br><span class="line">unknown_condition = <span class="number">100</span></span><br><span class="line">my_number = <span class="number">0</span></span><br><span class="line"><span class="keyword">while</span> my_number &lt; unknown_condition:</span><br><span class="line">    <span class="keyword">if</span> my_number % <span class="number">2</span> == <span class="number">0</span>:</span><br><span class="line">        my_number = my_number + <span class="number">10</span></span><br><span class="line">        print(my_number)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        my_number = my_number + <span class="number">5</span></span><br><span class="line">        print(my_number)</span><br><span class="line"></span><br><span class="line">print(<span class="string">'I am out of while loop now'</span>)</span><br><span class="line">print(<span class="string">'my_number is %d in the end'</span>%my_number)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 输出如下所示：</span></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="string">10</span></span><br><span class="line"><span class="string">20</span></span><br><span class="line"><span class="string">30</span></span><br><span class="line"><span class="string">40</span></span><br><span class="line"><span class="string">50</span></span><br><span class="line"><span class="string">60</span></span><br><span class="line"><span class="string">70</span></span><br><span class="line"><span class="string">80</span></span><br><span class="line"><span class="string">90</span></span><br><span class="line"><span class="string">100</span></span><br><span class="line"><span class="string">I am out of while loop now</span></span><br><span class="line"><span class="string">my_number is 100 in the end</span></span><br><span class="line"><span class="string">"""</span></span><br></pre></td></tr></table></figure>
+<h4 id="2-D-List-List-Aliasing-Shallow-or-Deep-Copy"><a href="#2-D-List-List-Aliasing-Shallow-or-Deep-Copy" class="headerlink" title="2-D List, List Aliasing, Shallow or Deep Copy"></a>2-D List, List Aliasing, Shallow or Deep Copy</h4><blockquote>
+<ul>
+<li>Where we get most bugs</li>
+<li>You think you get a new list, but you are getting the same one in reality <strong>“牵一发动全身”</strong> <strong>“一改全改了”</strong></li>
+<li>When you are copying a list</li>
+</ul>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line">A = [<span class="number">1</span>,<span class="number">2</span>]</span><br><span class="line">B = A[:]</span><br><span class="line">print(B)</span><br><span class="line"></span><br><span class="line">print(B <span class="keyword">is</span> A)</span><br><span class="line"></span><br><span class="line">A = [[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>],[<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>]]</span><br><span class="line">B = A[:]</span><br><span class="line">print(A)</span><br><span class="line">print(B)</span><br><span class="line"></span><br><span class="line">B[<span class="number">1</span>][<span class="number">2</span>] = <span class="number">100</span></span><br><span class="line">print(B)</span><br><span class="line"></span><br><span class="line">print(A)</span><br><span class="line"></span><br><span class="line">print(A <span class="keyword">is</span> B)</span><br><span class="line">print(A[<span class="number">0</span>] <span class="keyword">is</span> B[<span class="number">0</span>])</span><br><span class="line">print(A[<span class="number">1</span>] <span class="keyword">is</span> B[<span class="number">1</span>])</span><br><span class="line"></span><br><span class="line"><span class="comment"># 输出如下所示：</span></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="string">[1, 2]</span></span><br><span class="line"><span class="string">False</span></span><br><span class="line"><span class="string">[[1, 2, 3], [4, 5, 6]]</span></span><br><span class="line"><span class="string">[[1, 2, 3], [4, 5, 6]]</span></span><br><span class="line"><span class="string">[[1, 2, 3], [4, 5, 100]]</span></span><br><span class="line"><span class="string">[[1, 2, 3], [4, 5, 100]]</span></span><br><span class="line"><span class="string">False</span></span><br><span class="line"><span class="string">True</span></span><br><span class="line"><span class="string">True</span></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"></span><br><span class="line">[[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>], [<span class="number">4</span>, <span class="number">5</span>, <span class="number">100</span>]]</span><br><span class="line">[[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>], [<span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>]]</span><br><span class="line">[[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>], [<span class="number">4</span>, <span class="number">5</span>, <span class="number">100</span>]]</span><br><span class="line"><span class="comment"># We call B a shallow copy of A, to make a deep copy,</span></span><br><span class="line"><span class="comment"># we need to use the copy.deepcopy function</span></span><br><span class="line"><span class="keyword">import</span> copy</span><br><span class="line">A = [[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>],[<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>]]</span><br><span class="line">B = copy.copy(A)</span><br><span class="line">B[<span class="number">1</span>][<span class="number">2</span>] = <span class="number">100</span></span><br><span class="line">print(A) <span class="comment"># same as [:]</span></span><br><span class="line"></span><br><span class="line">A = [[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>],[<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>]]</span><br><span class="line">B = copy.deepcopy(A)</span><br><span class="line">B[<span class="number">1</span>][<span class="number">2</span>] = <span class="number">100</span></span><br><span class="line">print(A)</span><br><span class="line">print(B)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 输出如下所示：</span></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="string">[[1, 2, 3], [4, 5, 100]]</span></span><br><span class="line"><span class="string">[[1, 2, 3], [4, 5, 6]]</span></span><br><span class="line"><span class="string">[[1, 2, 3], [4, 5, 100]]</span></span><br><span class="line"><span class="string">"""</span></span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Python/" rel="tag"># Python</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/01/18/剑指Offer之和为S的连续正数序列/" rel="next" title="剑指Offer之和为S的连续正数序列">
+                <i class="fa fa-chevron-left"></i> 剑指Offer之和为S的连续正数序列
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/01/23/Python_Numpy/" rel="prev" title="Numpy">
+                Numpy <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="https://blog-1253453438.cos.ap-beijing.myqcloud.com/hexo_icon/lq.jpg" alt="晴宝宝">
+          <p class="site-author-name" itemprop="name">晴宝宝</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/index.html">
+                <span class="site-state-item-count">68</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/lvqing17" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Python基础语法"><span class="nav-number">1.</span> <span class="nav-text">Python基础语法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Boolean-and-its-Opeations"><span class="nav-number">1.1.</span> <span class="nav-text">Boolean and its Opeations</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#And-Or"><span class="nav-number">1.2.</span> <span class="nav-text">And  Or</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Expressions-can-evaluate-to-a-boolean-value"><span class="nav-number">1.3.</span> <span class="nav-text">Expressions can evaluate to a boolean value</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Integer-and-floats"><span class="nav-number">1.4.</span> <span class="nav-text">Integer and floats</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Numerical-operations"><span class="nav-number">1.5.</span> <span class="nav-text">Numerical operations</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#String"><span class="nav-number">1.6.</span> <span class="nav-text">String</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#List"><span class="nav-number">1.7.</span> <span class="nav-text">List</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Method-and-Function"><span class="nav-number">1.8.</span> <span class="nav-text">Method and Function</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Tuple"><span class="nav-number">1.9.</span> <span class="nav-text">Tuple</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Set"><span class="nav-number">1.10.</span> <span class="nav-text">Set</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Common-operations-on-List-Set-Tuple"><span class="nav-number">1.11.</span> <span class="nav-text">Common operations on List, Set, Tuple</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Dictionary"><span class="nav-number">1.12.</span> <span class="nav-text">Dictionary</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Ranges"><span class="nav-number">1.13.</span> <span class="nav-text">Ranges</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Hashable"><span class="nav-number">1.14.</span> <span class="nav-text">Hashable</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Loop-and-Conditionals"><span class="nav-number">1.15.</span> <span class="nav-text">Loop and Conditionals</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-D-List-List-Aliasing-Shallow-or-Deep-Copy"><span class="nav-number">1.16.</span> <span class="nav-text">2-D List, List Aliasing, Shallow or Deep Copy</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy;  2017 - 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">晴宝宝</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+  
+  <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+  
+
+
+  
+  
+  
+  <script type="text/javascript" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js"></script>
+  
+
+</body>
+</html>
