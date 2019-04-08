@@ -95,7 +95,7 @@
 <meta property="og:site_name" content="晴宝">
 <meta property="og:description" content="题目描述： 每年六一儿童节,牛客都会准备一些小礼物去看望孤儿院的小朋友,今年亦是如此。HF作为牛客的资深元老,自然也准备了一些小游戏。其中,有个游戏是这样的:首先,让小朋友们围成一个大圈。然后,他随机指定一个数m,让编号为0的小朋友开始报数。每次喊到m-1的那个小朋友要出列唱首歌,然后可以在礼品箱中任意的挑选礼物,并且不再回到圈中,从他的下一个小朋友开始,继续0…m-1报数….这样下去….直到剩下">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-04-02T08:58:35.579Z">
+<meta property="og:updated_time" content="2019-04-03T07:59:30.496Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="剑指Offer之孩子们的游戏(圆圈中最后剩下的数)">
 <meta name="twitter:description" content="题目描述： 每年六一儿童节,牛客都会准备一些小礼物去看望孤儿院的小朋友,今年亦是如此。HF作为牛客的资深元老,自然也准备了一些小游戏。其中,有个游戏是这样的:首先,让小朋友们围成一个大圈。然后,他随机指定一个数m,让编号为0的小朋友开始报数。每次喊到m-1的那个小朋友要出列唱首歌,然后可以在礼品箱中任意的挑选礼物,并且不再回到圈中,从他的下一个小朋友开始,继续0…m-1报数….这样下去….直到剩下">
@@ -363,7 +363,7 @@
                   <span class="post-meta-item-text">字数统计</span>
                 
                 <span title="字数统计">
-                  246 字
+                  538 字
                 </span>
               
 
@@ -379,7 +379,7 @@
                   <span class="post-meta-item-text">阅读时长</span>
                 
                 <span title="阅读时长" }}"="">
-                  1 分钟
+                  2 分钟
                 </span>
               
             </div>
@@ -402,9 +402,15 @@
 <p>每年六一儿童节,牛客都会准备一些小礼物去看望孤儿院的小朋友,今年亦是如此。HF作为牛客的资深元老,自然也准备了一些小游戏。其中,有个游戏是这样的:首先,让小朋友们围成一个大圈。然后,他随机指定一个数m,让编号为0的小朋友开始报数。每次喊到m-1的那个小朋友要出列唱首歌,然后可以在礼品箱中任意的挑选礼物,并且不再回到圈中,从他的下一个小朋友开始,继续0…m-1报数….这样下去….直到剩下最后一个小朋友,可以不用表演,并且拿到牛客名贵的“名侦探柯南”典藏版(名额有限哦!!^_^)。请你试着想下,哪个小朋友会得到这份礼品呢？(注：小朋友的编号是从0到n-1)</p>
 </blockquote>
 <a id="more"></a>
-<h3 id="解题思路："><a href="#解题思路：" class="headerlink" title="解题思路："></a>解题思路：</h3><blockquote>
+<h3 id="解题思路一："><a href="#解题思路一：" class="headerlink" title="解题思路一："></a>解题思路一：</h3><blockquote>
+<p>时间复杂度：$O(n)$,空间复杂度：$O(n)$.</p>
 </blockquote>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">LastRemaining_Solution</span><span class="params">(<span class="keyword">int</span> n, <span class="keyword">int</span> m)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="comment">/*</span></span><br><span class="line"><span class="comment">    *这道题我用数组来模拟环，思路还是比较简单，但是各种下标要理清</span></span><br><span class="line"><span class="comment">        */</span></span><br><span class="line">        <span class="keyword">if</span>(n&lt;<span class="number">1</span>||m&lt;<span class="number">1</span>) <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">        <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; vec(n);</span><br><span class="line">        <span class="keyword">int</span> i = <span class="number">-1</span>,step = <span class="number">0</span>, count = n;</span><br><span class="line">        <span class="keyword">while</span>(count&gt;<span class="number">0</span>)&#123;    <span class="comment">//跳出循环时将最后一个元素也设置为了-1</span></span><br><span class="line">            i++;           <span class="comment">//指向上一个被删除对象的下一个元素。</span></span><br><span class="line">            <span class="keyword">if</span>(i&gt;=n) i=<span class="number">0</span>;  <span class="comment">//模拟环。</span></span><br><span class="line">            <span class="keyword">if</span>(<span class="built_in">array</span>[i] == <span class="number">-1</span>) <span class="keyword">continue</span>; <span class="comment">//跳过被删除的对象。</span></span><br><span class="line">            step++;                      <span class="comment">//记录已走过的。</span></span><br><span class="line">            <span class="keyword">if</span>(step==m) &#123;                <span class="comment">//找到待删除的对象。</span></span><br><span class="line">                vec[i]=<span class="number">-1</span>;</span><br><span class="line">                step = <span class="number">0</span>;</span><br><span class="line">                count--;</span><br><span class="line">            &#125;        </span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> i;<span class="comment">//返回跳出循环时的i,即最后一个被设置为-1的元素</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h3 id="解题思路二："><a href="#解题思路二：" class="headerlink" title="解题思路二："></a>解题思路二：</h3><blockquote>
+<p>利用数学分析得到的解法</p>
+<p>时间复杂度：$O(n)$,空间复杂度：$O(1)$.</p>
+</blockquote>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">LastRemaining_Solution</span><span class="params">(<span class="keyword">int</span> n, <span class="keyword">int</span> m)</span></span></span><br><span class="line"><span class="function">    </span>&#123; </span><br><span class="line">        <span class="comment">//f(n,m)=[f(n-1,m)+m]%n，其中f(n,m)为长度为n的删除第m个节点，最后剩下的数字</span></span><br><span class="line">        <span class="keyword">if</span>(n&lt;=<span class="number">0</span>||m&lt;=<span class="number">0</span>)</span><br><span class="line">            <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">        <span class="keyword">int</span> last=<span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">2</span>;i&lt;=n;i++)</span><br><span class="line">            last=(last+m)%i;</span><br><span class="line">        <span class="keyword">return</span> last;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 
       
     </div>
@@ -525,7 +531,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/index.html">
-                <span class="site-state-item-count">82</span>
+                <span class="site-state-item-count">103</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -593,7 +599,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#题目描述："><span class="nav-number">1.</span> <span class="nav-text">题目描述：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#解题思路："><span class="nav-number">2.</span> <span class="nav-text">解题思路：</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#题目描述："><span class="nav-number">1.</span> <span class="nav-text">题目描述：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#解题思路一："><span class="nav-number">2.</span> <span class="nav-text">解题思路一：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#解题思路二："><span class="nav-number">3.</span> <span class="nav-text">解题思路二：</span></a></li></ol></div>
             
 
           </div>
