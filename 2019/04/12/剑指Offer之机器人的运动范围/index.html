@@ -92,7 +92,7 @@
 <meta property="og:site_name" content="晴宝">
 <meta property="og:description" content="题目描述： 地上有一个m行和n列的方格。一个机器人从坐标0,0的格子开始移动，每一次只能向左，右，上，下四个方向移动一格，但是不能进入行坐标和列坐标的数位之和大于k的格子。 例如，当k为18时，机器人能够进入方格（35,37），因为3+5+3+7 = 18。但是，它不能进入方格（35,38），因为3+5+3+8 = 19。请问该机器人能够达到多少个格子？">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-04-15T06:33:56.028Z">
+<meta property="og:updated_time" content="2019-04-17T00:43:36.810Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="剑指Offer之机器人的运动范围">
 <meta name="twitter:description" content="题目描述： 地上有一个m行和n列的方格。一个机器人从坐标0,0的格子开始移动，每一次只能向左，右，上，下四个方向移动一格，但是不能进入行坐标和列坐标的数位之和大于k的格子。 例如，当k为18时，机器人能够进入方格（35,37），因为3+5+3+7 = 18。但是，它不能进入方格（35,38），因为3+5+3+8 = 19。请问该机器人能够达到多少个格子？">
@@ -360,7 +360,7 @@
                   <span class="post-meta-item-text">字数统计</span>
                 
                 <span title="字数统计">
-                  137 字
+                  466 字
                 </span>
               
 
@@ -376,7 +376,7 @@
                   <span class="post-meta-item-text">阅读时长</span>
                 
                 <span title="阅读时长" }}"="">
-                  1 分钟
+                  2 分钟
                 </span>
               
             </div>
@@ -400,8 +400,17 @@
 </blockquote>
 <a id="more"></a>
 <h3 id="解题思路："><a href="#解题思路：" class="headerlink" title="解题思路："></a>解题思路：</h3><blockquote>
+<p>核心思路：</p>
+<p>1.从(0,0)开始走，每成功走一步标记当前位置为true,然后从当前位置往四个方向探索，</p>
+<p>返回1 + 4 个方向的探索值之和。</p>
+<p>2.探索时，判断当前节点是否可达的标准为：</p>
+<p>1）当前节点在矩阵内；</p>
+<p>2）当前节点未被访问过；</p>
+<p>3）当前节点满足limit限制。</p>
+<p>// 注意他的分析思路</p>
+<p>比如说，节点是否可以访问，用函数来处理，位置数值的分解用函数来处理</p>
 </blockquote>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">movingCount</span><span class="params">(<span class="keyword">int</span> threshold, <span class="keyword">int</span> rows, <span class="keyword">int</span> cols)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> count = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">bool</span> *flag = <span class="keyword">new</span> <span class="keyword">bool</span>[rows * cols]();</span><br><span class="line">        count = move(threshold,rows,cols,<span class="number">0</span>,<span class="number">0</span>,flag);</span><br><span class="line">        <span class="keyword">return</span> count;</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 判断是否能移动</span></span><br><span class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">isMove</span><span class="params">(<span class="keyword">int</span> rows,<span class="keyword">int</span> cols,<span class="keyword">int</span> i,<span class="keyword">int</span> j,<span class="keyword">int</span> threshold,<span class="keyword">bool</span> *flag)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(i &gt;= <span class="number">0</span> &amp;&amp; j &gt;= <span class="number">0</span>&amp;&amp; i &lt; rows &amp;&amp; j &lt; cols &amp;&amp; !flag[i * cols + j] &amp;&amp; getNum(i) + getNum(j) &lt;= threshold) <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">getNum</span><span class="params">(<span class="keyword">int</span> k)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> res = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">while</span>(k &gt; <span class="number">0</span> )</span><br><span class="line">        &#123;</span><br><span class="line">            res += k % <span class="number">10</span>;</span><br><span class="line">            k /= <span class="number">10</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 递归的移动函数</span></span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">move</span><span class="params">(<span class="keyword">int</span> threshold,<span class="keyword">int</span> rows,<span class="keyword">int</span> cols,<span class="keyword">int</span> i,<span class="keyword">int</span> j,<span class="keyword">bool</span> *flag)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> count = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">if</span>(isMove(rows,cols,i,j,threshold,flag))</span><br><span class="line">        &#123;</span><br><span class="line">            flag[i * cols + j] = <span class="literal">true</span>;</span><br><span class="line">            count = <span class="number">1</span> + move(threshold,rows,cols,i<span class="number">-1</span>,j,flag)</span><br><span class="line">                + move(threshold,rows,cols,i+<span class="number">1</span>,j,flag)</span><br><span class="line">                + move(threshold,rows,cols,i,j - <span class="number">1</span>,flag)</span><br><span class="line">                + move(threshold,rows,cols,i,j + <span class="number">1</span>,flag);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> count;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 
       
     </div>
@@ -514,7 +523,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/index.html">
-                <span class="site-state-item-count">136</span>
+                <span class="site-state-item-count">139</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
