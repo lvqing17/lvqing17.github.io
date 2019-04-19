@@ -95,7 +95,7 @@
 <meta property="og:site_name" content="晴宝">
 <meta property="og:description" content="题目描述： 在数组中的两个数字，如果前面一个数字大于后面的数字，则这两个数字组成一个逆序对。输入一个数组,求出这个数组中的逆序对的总数P。并将P对1000000007取模的结果输出。 即输出P%1000000007 输入描述:12&amp;gt; 题目保证输入的数组中没有的相同的数字数据范围：	对于%50的数据,size&amp;lt;=10^4	对于%75的数据,size&amp;lt;=10^5	对于%100的数据,">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-04-16T06:04:43.255Z">
+<meta property="og:updated_time" content="2019-04-19T01:52:40.218Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="剑指Offer之数组中的逆序对">
 <meta name="twitter:description" content="题目描述： 在数组中的两个数字，如果前面一个数字大于后面的数字，则这两个数字组成一个逆序对。输入一个数组,求出这个数组中的逆序对的总数P。并将P对1000000007取模的结果输出。 即输出P%1000000007 输入描述:12&amp;gt; 题目保证输入的数组中没有的相同的数字数据范围：	对于%50的数据,size&amp;lt;=10^4	对于%75的数据,size&amp;lt;=10^5	对于%100的数据,">
@@ -363,7 +363,7 @@
                   <span class="post-meta-item-text">字数统计</span>
                 
                 <span title="字数统计">
-                  165 字
+                  444 字
                 </span>
               
 
@@ -379,7 +379,7 @@
                   <span class="post-meta-item-text">阅读时长</span>
                 
                 <span title="阅读时长" }}"="">
-                  1 分钟
+                  2 分钟
                 </span>
               
             </div>
@@ -411,8 +411,10 @@
 </blockquote>
 <a id="more"></a>
 <h3 id="解题思路："><a href="#解题思路：" class="headerlink" title="解题思路："></a>解题思路：</h3><blockquote>
+<p>先把数组分割成子数组，先统计出子数组内部的逆序对的数目，然后再统计出两个相邻子数组之间的逆序对的数目。在统计逆序对的过程中，还需要对数组进行排序。</p>
+<p>时间复杂度：$O(nlogn)$,空间复杂度：$O(n)$.</p>
 </blockquote>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="keyword">long</span> countRes ;</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">InversePairs</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; data)</span> </span>&#123;</span><br><span class="line">        countRes = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">if</span>(data.size() == <span class="number">0</span>)</span><br><span class="line">            <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        <span class="comment">// 调用归并排序</span></span><br><span class="line">        MergeSort(data,<span class="number">0</span>,data.size()<span class="number">-1</span>);</span><br><span class="line">        <span class="keyword">return</span> countRes%<span class="number">1000000007</span> ;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 归并排序</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">MergeSort</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; data,<span class="keyword">int</span> first,<span class="keyword">int</span> end)</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(first &lt; end)&#123;</span><br><span class="line">            <span class="keyword">int</span> mid = (first + end)/<span class="number">2</span>;</span><br><span class="line">            MergeSort(data,first,mid);</span><br><span class="line">            MergeSort(data,mid+<span class="number">1</span>,end);</span><br><span class="line">            <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; tmp;</span><br><span class="line">            MergeArray(data,first,mid,end,tmp);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">MergeArray</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; data,<span class="keyword">int</span> first,<span class="keyword">int</span> mid,<span class="keyword">int</span> end,<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; tmp)</span></span>&#123;</span><br><span class="line">        <span class="keyword">int</span> i = first;<span class="keyword">int</span> m = mid;</span><br><span class="line">        <span class="keyword">int</span> j = mid + <span class="number">1</span>;<span class="keyword">int</span> n = end;</span><br><span class="line">     	</span><br><span class="line">        <span class="keyword">while</span>(i&lt;=m &amp;&amp; j&lt;=n)&#123;</span><br><span class="line">            <span class="keyword">if</span>(data[i] &gt; data[j])&#123;</span><br><span class="line">                tmp.push_back(data[i++]);</span><br><span class="line">                countRes += n - j + <span class="number">1</span>; <span class="comment">// *****</span></span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span>&#123;</span><br><span class="line">                tmp.push_back(data[j++]);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">while</span>(i&lt;=m)</span><br><span class="line">            tmp.push_back(data[i++]);</span><br><span class="line">        <span class="keyword">while</span> (j&lt;=n)</span><br><span class="line">            tmp.push_back(data[j++]);</span><br><span class="line"> </span><br><span class="line">        <span class="comment">//更新data数组</span></span><br><span class="line">        <span class="keyword">int</span> k = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = first; i &lt;= end &amp;&amp;k&lt;tmp.size(); i++)</span><br><span class="line">            data[i] = tmp[k++];</span><br><span class="line">         </span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 
       
     </div>
@@ -533,7 +535,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/index.html">
-                <span class="site-state-item-count">139</span>
+                <span class="site-state-item-count">141</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
