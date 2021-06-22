@@ -1,0 +1,818 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="OpenCV,">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="https://blog-1253453438.cos.ap-beijing.myqcloud.com/hexo_icon/L_0(%E5%B7%B2%E5%8E%BB%E5%BA%95).png?v=5.1.0">
+
+
+
+
+
+
+<meta name="description" content="计算两个矩阵的相似性  画三角形、圆形检测出来  Haar特征与Viola-Joines人脸检测  基于OpenCV的运动物体追踪  基于Opencv的数字图像识别">
+<meta name="keywords" content="OpenCV">
+<meta property="og:type" content="article">
+<meta property="og:title" content="OpenCV之Practice">
+<meta property="og:url" content="http://lvqing17.github.io/2019/03/28/OpenCV/OpenCV之Practice/index.html">
+<meta property="og:site_name" content="晴宝">
+<meta property="og:description" content="计算两个矩阵的相似性  画三角形、圆形检测出来  Haar特征与Viola-Joines人脸检测  基于OpenCV的运动物体追踪  基于Opencv的数字图像识别">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-03-28T06:01:23.006Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="OpenCV之Practice">
+<meta name="twitter:description" content="计算两个矩阵的相似性  画三角形、圆形检测出来  Haar特征与Viola-Joines人脸检测  基于OpenCV的运动物体追踪  基于Opencv的数字图像识别">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 'undefined',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://lvqing17.github.io/2019/03/28/OpenCV/OpenCV之Practice/">
+
+
+
+
+
+  <title> OpenCV之Practice | 晴宝 </title>
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+ 
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+  
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+	<a target="_blank" href="https://github.com/lvqing17"><img style="position: absolute; top: 0; left: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_left_gray_6d6d6d.png" alt="Fork me on GitHub"></a>
+
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">晴宝</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">吃饱好减肥</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/index.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/index.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/index.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/index.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope="" itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://lvqing17.github.io/2019/03/28/OpenCV/OpenCV之Practice/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="晴宝宝">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://blog-1253453438.cos.ap-beijing.myqcloud.com/hexo_icon/lq.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="晴宝">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                OpenCV之Practice
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-28T10:06:55+08:00">
+                2019-03-28
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/OpenCV/" itemprop="url" rel="index">
+                    <span itemprop="name">OpenCV</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  4.5k 字
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长" }}"="">
+                  24 分钟
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<ol>
+<li><p>计算两个矩阵的相似性</p>
+</li>
+<li><p>画三角形、圆形检测出来</p>
+</li>
+<li><p>Haar特征与Viola-Joines人脸检测</p>
+</li>
+<li><p>基于OpenCV的运动物体追踪</p>
+</li>
+<li><p>基于Opencv的数字图像识别</p>
+</li>
+</ol>
+</blockquote>
+<a id="more"></a>
+<h3 id="计算两个矩阵的相似性"><a href="#计算两个矩阵的相似性" class="headerlink" title="计算两个矩阵的相似性"></a>计算两个矩阵的相似性</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">//计算两个图的相似性</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;opencv2/opencv.hpp&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> cv;</span><br><span class="line"></span><br><span class="line">Mat srcImage, dstImage;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 函数说明</span></span><br><span class="line"><span class="comment">// 这个函数是用来返回两个黑白图片的相似度的</span></span><br><span class="line"><span class="comment">// 输入是两个图片，输出是相似度</span></span><br><span class="line"><span class="function"><span class="keyword">float</span> <span class="title">isSimilar</span><span class="params">(Mat &amp;src, Mat &amp;dst)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="comment">// 先定义两个图片的矩阵</span></span><br><span class="line">	Mat src_copy, dst_copy;</span><br><span class="line">	<span class="comment">// resize(dst, src.row, src.col);</span></span><br><span class="line">	<span class="comment">// 讲两个图片缩放到src的尺寸上，并且用心的矩阵来储存</span></span><br><span class="line">	resize(src, src_copy, src.size(), <span class="number">0</span>, <span class="number">0</span>, INTER_LINEAR);</span><br><span class="line">	resize(dst, dst_copy, src.size(), <span class="number">0</span>, <span class="number">0</span>, INTER_LINEAR);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	<span class="keyword">float</span> same = <span class="number">0</span>, diff = <span class="number">0</span>;</span><br><span class="line">	<span class="comment">// 两层for循环访问所有的元素点</span></span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; src_copy.rows; i++)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; src_copy.cols; j++)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="comment">// 如果像素相同，那么same加1</span></span><br><span class="line">			<span class="comment">// 这里的代码明明是学习笔记上的，要好好看啊</span></span><br><span class="line">			<span class="keyword">if</span> (src_copy.at&lt;uchar&gt;(i, j) == dst_copy.at&lt;uchar&gt;(i, j))</span><br><span class="line">				same += <span class="number">1</span>;</span><br><span class="line">			<span class="comment">// 如果像素不同，那么diff加1</span></span><br><span class="line">			<span class="keyword">else</span></span><br><span class="line">				diff += <span class="number">1</span>;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">// 返回相似度</span></span><br><span class="line">	<span class="keyword">return</span> same / (same + diff);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="comment">// 在main函数里面读入两个图片</span></span><br><span class="line">	srcImage = imread(<span class="string">"8.png"</span>);</span><br><span class="line">	dstImage = imread(<span class="string">"9.png"</span>);</span><br><span class="line">	<span class="comment">// 对两个图片转换成灰度</span></span><br><span class="line">	cvtColor(srcImage, srcImage, CV_BGR2GRAY);</span><br><span class="line">	cvtColor(dstImage, dstImage, CV_BGR2GRAY);</span><br><span class="line">	<span class="comment">// 将两个图片转成黑白图，阈值化</span></span><br><span class="line">	threshold(srcImage, srcImage, <span class="number">100</span>, <span class="number">255</span>, CV_THRESH_BINARY);</span><br><span class="line">	threshold(dstImage, dstImage, <span class="number">100</span>, <span class="number">255</span>, CV_THRESH_BINARY);</span><br><span class="line">	<span class="comment">// 定义一个float</span></span><br><span class="line">	<span class="keyword">float</span> sim = <span class="number">0</span>;</span><br><span class="line">	sim = isSimilar(srcImage, dstImage);</span><br><span class="line"></span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="string">" the sim is "</span> &lt;&lt; sim &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	system(<span class="string">"pause"</span>);</span><br><span class="line">	waitKey(<span class="number">0</span>);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="画三角形、圆形检测出来"><a href="#画三角形、圆形检测出来" class="headerlink" title="画三角形、圆形检测出来"></a>画三角形、圆形检测出来</h3><blockquote>
+<p>任务说明：<br>首先创建一个512×512的3通道的白色的图像<br>然后在这个图像上画三角形，四角形，五角形，六角形，圆，以及椭圆<br>对这个图像，使用霍夫曼检查直线和圆</p>
+</blockquote>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;opencv2/opencv.hpp&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> cv;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">//绘制椭圆</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">drawEllipse</span><span class="params">(Mat img, <span class="keyword">double</span> angle)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> thickness = <span class="number">2</span>;</span><br><span class="line">	<span class="keyword">int</span> lineType = <span class="number">8</span>;</span><br><span class="line"></span><br><span class="line">	ellipse(img, Point(<span class="number">40</span>, <span class="number">40</span>), Size(<span class="number">20</span>, <span class="number">40</span>), angle, <span class="number">0</span>, <span class="number">360</span>, Scalar(<span class="number">255</span>, <span class="number">129</span>, <span class="number">0</span>), thickness, lineType);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//绘制圆</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">drawCircle</span><span class="params">(Mat img, Point center)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> thickness = <span class="number">2</span>;</span><br><span class="line">	<span class="keyword">int</span> lineType = <span class="number">8</span>;</span><br><span class="line"></span><br><span class="line">	circle(img, center, <span class="number">30</span>, Scalar(<span class="number">168</span>, <span class="number">109</span>, <span class="number">255</span>), thickness, lineType);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//画线</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">drawLine</span><span class="params">(Mat img, Point start, Point end)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> thickness = <span class="number">2</span>;</span><br><span class="line">	<span class="keyword">int</span> lineType = <span class="number">8</span>;</span><br><span class="line"></span><br><span class="line">	line(img, start, end, Scalar(<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>), thickness, lineType);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//绘制矩形</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">drawRectangle</span><span class="params">(Mat img, Point pt1, Point pt2)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> thickness = <span class="number">2</span>;</span><br><span class="line">	<span class="keyword">int</span> lineType = <span class="number">8</span>;</span><br><span class="line"></span><br><span class="line">	rectangle(img, pt1, pt2, Scalar(<span class="number">0</span>, <span class="number">255</span>, <span class="number">0</span>), thickness, lineType);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//绘制三角形</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">drawLine_Triangle</span><span class="params">(Mat img)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> thickness = <span class="number">2</span>;</span><br><span class="line">	<span class="keyword">int</span> lineType = <span class="number">8</span>;</span><br><span class="line"></span><br><span class="line">	Point l1_start(200, 150), l1_end(50, 250);</span><br><span class="line">	Point l2_start(50, 250), l2_end(400, 380);</span><br><span class="line">	Point l3_start(400, 380), l3_end(200, 150);</span><br><span class="line">	line(img, l1_start, l1_end, Scalar(<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>), thickness, lineType);</span><br><span class="line">	line(img, l2_start, l2_end, Scalar(<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>), thickness, lineType);</span><br><span class="line">	line(img, l3_start, l3_end, Scalar(<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>), thickness, lineType);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">////绘制多边形</span></span><br><span class="line"><span class="comment">//void drawfillPloy(Mat img)</span></span><br><span class="line"><span class="comment">//&#123;</span></span><br><span class="line"><span class="comment">//	int lineType = 8;</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">//	Point rookPoints[1][3];</span></span><br><span class="line"><span class="comment">//	rookPoints[0][0] = Point(30, 30);</span></span><br><span class="line"><span class="comment">//	rookPoints[0][1] = Point(60, 60);</span></span><br><span class="line"><span class="comment">//	rookPoints[0][2] = Point(90, 90);</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">//	Point *pts[1] = &#123;rookPoints[0]&#125;; //点序列的序列</span></span><br><span class="line"><span class="comment">//	int npts[] = &#123;3&#125;;   //pts[i]中点的数目</span></span><br><span class="line"><span class="comment">//	int ncontours = 3;  //pts中的序列数</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">//	fillPoly(img, pts, npts, ncontours, Scalar(168, 200, 120), lineType);</span></span><br><span class="line"><span class="comment">//&#125;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//使用霍夫线检测出线</span></span><br><span class="line"><span class="comment">//Mat check_line(Mat img)</span></span><br><span class="line"><span class="comment">//&#123;</span></span><br><span class="line"><span class="comment">//	Mat dstImage;</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">//	cvtColor(img, dstImage, COLOR_BGR2GRAY);</span></span><br><span class="line"><span class="comment">//	adaptiveThreshold(dstImage, dstImage, 50, ADAPTIVE_THRESH_GAUSSIAN_C, THRESH_BINARY_INV, 10, 10);</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">//	vector&lt;Vec2f&gt; lines;</span></span><br><span class="line"><span class="comment">//	HoughLines(dstImage, lines, 1, CV_PI/180, 80, 0, 0);</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">//	vector&lt;Vec2f&gt; ::iterator itl = lines.begin();</span></span><br><span class="line"><span class="comment">//	while (itl != lines.end())</span></span><br><span class="line"><span class="comment">//	&#123;</span></span><br><span class="line"><span class="comment">//		rectangle(img, Point((*itl)[0] + 5, (*itl)[1] + 5), Point((*itl)[2] + 5, (*itl)[3] + 5), 2, 8);</span></span><br><span class="line"><span class="comment">//		++itl;</span></span><br><span class="line"><span class="comment">//	&#125;</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">//	imshow("check_lines", img);</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">//	return img;</span></span><br><span class="line"><span class="comment">//&#125;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//使用霍夫线检测出线</span></span><br><span class="line"><span class="function">Mat <span class="title">check_line</span><span class="params">(Mat&amp; img)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	Mat dstImage;</span><br><span class="line"></span><br><span class="line">	cvtColor(img, dstImage, COLOR_BGR2GRAY);</span><br><span class="line"></span><br><span class="line">	Canny(dstImage, dstImage, <span class="number">150</span>, <span class="number">255</span>, <span class="number">3</span>);</span><br><span class="line"></span><br><span class="line">	<span class="comment">//使用霍夫曼检测</span></span><br><span class="line">	<span class="comment">//vector&lt;Vec4f&gt; lines;</span></span><br><span class="line">	<span class="comment">// 注意这里的第二个参数</span></span><br><span class="line">	<span class="comment">//HoughLines(dstImage, lines, 1, CV_PI/180.0, 80,50,10);</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">// 以下修改为霍夫曼概率直线检测函数</span></span><br><span class="line">	<span class="comment">// 注意这里的参数</span></span><br><span class="line">	<span class="built_in">vector</span>&lt;Vec4i&gt; lines;</span><br><span class="line">	<span class="comment">// 注意一下，使用霍夫曼概率直线检测与霍夫曼直线检测的区别</span></span><br><span class="line">	<span class="comment">// 注意这里的第二个参数</span></span><br><span class="line">	HoughLinesP(dstImage, lines, <span class="number">1</span>, CV_PI / <span class="number">180.0</span>, <span class="number">80</span>, <span class="number">50</span>, <span class="number">10</span>);</span><br><span class="line"></span><br><span class="line">	Scalar color = Scalar(<span class="number">0</span>, <span class="number">0</span>, <span class="number">255</span>);</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">size_t</span> i = <span class="number">0</span>; i &lt; lines.size(); i++) &#123;</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; <span class="string">" i is "</span> &lt;&lt; i &lt;&lt; <span class="string">"  "</span>;</span><br><span class="line">		Vec4i hline = lines[i];</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; hline[<span class="number">0</span>] &lt;&lt; <span class="string">" ||| "</span> &lt;&lt; hline[<span class="number">1</span>] &lt;&lt; <span class="string">" ||| "</span> &lt;&lt; hline[<span class="number">2</span>] &lt;&lt; <span class="string">" |||| "</span> &lt;&lt; hline[<span class="number">3</span>] &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">		line(img, Point(hline[<span class="number">0</span>], hline[<span class="number">1</span>]), Point(hline[<span class="number">2</span>], hline[<span class="number">3</span>]), color, <span class="number">3</span>, LINE_AA);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	imshow(<span class="string">"check_lines"</span>, img);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> img;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//使用霍夫圆检测出圆形</span></span><br><span class="line"><span class="function">Mat <span class="title">check_circle</span><span class="params">(Mat img)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	Mat dstImage;</span><br><span class="line"></span><br><span class="line">	cvtColor(img, dstImage, COLOR_BGR2GRAY);</span><br><span class="line">	GaussianBlur(dstImage, dstImage, Size(<span class="number">7</span>, <span class="number">7</span>), <span class="number">1.5</span>);</span><br><span class="line"></span><br><span class="line">	<span class="built_in">vector</span>&lt;Vec3f&gt; circles;</span><br><span class="line">	HoughCircles(dstImage, circles, CV_HOUGH_GRADIENT, <span class="number">2</span>, <span class="number">30</span>, <span class="number">200</span>, <span class="number">100</span>, <span class="number">20</span>, <span class="number">80</span>);</span><br><span class="line"></span><br><span class="line">	<span class="comment">/*vector&lt;Vec3f&gt; ::iterator itc = circles.begin();</span></span><br><span class="line"><span class="comment">	while (itc != circles.end())</span></span><br><span class="line"><span class="comment">	&#123;</span></span><br><span class="line"><span class="comment">		circle(img, Point((*itc)[0], (*itc)[1]), (*itc)[2] + 20, Scalar(0, 0, 255), 6);</span></span><br><span class="line"><span class="comment">		++itc;</span></span><br><span class="line"><span class="comment">	&#125;*/</span></span><br><span class="line"></span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">size_t</span> i = <span class="number">0</span>; i &lt; circles.size(); i++)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="function">Point <span class="title">center</span><span class="params">(cvRound(circles[i][<span class="number">0</span>]), cvRound(circles[i][<span class="number">1</span>]))</span></span>;</span><br><span class="line">		<span class="keyword">int</span> r = cvRound(circles[i][<span class="number">2</span>]);</span><br><span class="line"></span><br><span class="line">		circle(img, center, r, Scalar(<span class="number">0</span>, <span class="number">0</span>, <span class="number">255</span>), <span class="number">3</span>, <span class="number">8</span>, <span class="number">0</span>);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	imshow(<span class="string">"check_Circle"</span>, img);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> img;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="function">Mat <span class="title">srcImage</span><span class="params">(<span class="number">512</span>, <span class="number">512</span>, CV_8UC3 ,Scalar(<span class="number">255</span>, <span class="number">255</span>, <span class="number">255</span>))</span></span>;</span><br><span class="line"></span><br><span class="line">	<span class="comment">//imshow("srcImage", srcImage);</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">//绘制椭圆形</span></span><br><span class="line">	drawEllipse(srcImage, <span class="number">30</span>);</span><br><span class="line">	<span class="comment">//绘制圆形</span></span><br><span class="line">	<span class="function">Point <span class="title">center</span><span class="params">(<span class="number">300</span>, <span class="number">100</span>)</span></span>;</span><br><span class="line">	drawCircle(srcImage, center);</span><br><span class="line">	<span class="comment">//绘制线段</span></span><br><span class="line">	<span class="function">Point <span class="title">start</span><span class="params">(<span class="number">100</span>, <span class="number">100</span>)</span></span>;</span><br><span class="line">	<span class="function">Point <span class="title">end</span><span class="params">(<span class="number">200</span>, <span class="number">200</span>)</span></span>;</span><br><span class="line">	drawLine(srcImage, start, end);</span><br><span class="line">	<span class="comment">//绘制矩形</span></span><br><span class="line">	<span class="function">Point <span class="title">pt1</span><span class="params">(<span class="number">300</span>, <span class="number">300</span>)</span></span>; <span class="comment">//矩形的第一个顶点</span></span><br><span class="line">	<span class="function">Point <span class="title">pt2</span><span class="params">(<span class="number">500</span>, <span class="number">500</span>)</span></span>; <span class="comment">//矩形的对角线顶点</span></span><br><span class="line">	drawRectangle(srcImage, pt1, pt2);</span><br><span class="line">	<span class="comment">//绘制三角形</span></span><br><span class="line">	drawLine_Triangle(srcImage);</span><br><span class="line"></span><br><span class="line">	<span class="comment">//putText(srcImage, "dasha is wangjiacun", Point(70, 70), FONT_HERSHEY_PLAIN, 2, 255, 2);</span></span><br><span class="line"></span><br><span class="line">	imshow(<span class="string">"out"</span>, srcImage);</span><br><span class="line">	                                                                   </span><br><span class="line">	check_line(srcImage);</span><br><span class="line">	check_circle(srcImage);</span><br><span class="line"></span><br><span class="line">	waitKey(<span class="number">0</span>);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="Haar特征与Viola-Joines人脸检测"><a href="#Haar特征与Viola-Joines人脸检测" class="headerlink" title="Haar特征与Viola-Joines人脸检测"></a>Haar特征与Viola-Joines人脸检测</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//OpenCV3/C++ Haar特征与Viola-Joines人脸检测</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;opencv2/opencv.hpp&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;opencv2/objdetect.hpp&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> cv;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	Mat srcImage;</span><br><span class="line">	CascadeClassifier face_cacade;</span><br><span class="line"></span><br><span class="line">	<span class="function">VideoCapture <span class="title">capture</span><span class="params">(<span class="number">0</span>)</span></span>;</span><br><span class="line">	<span class="keyword">if</span> (!face_cacade.load(<span class="string">"D:\\Project_OpenCV\\Cmake\\install\\etc\\haarcascades\\haarcascade_frontalface_alt.xml"</span>))</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"can not load the file...\n"</span>);</span><br><span class="line">		<span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">while</span> (<span class="number">1</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		capture &gt;&gt; srcImage;</span><br><span class="line">		<span class="built_in">vector</span>&lt;Rect&gt; faces;</span><br><span class="line">		Mat gray_image;</span><br><span class="line">		cvtColor(srcImage, gray_image, CV_BGR2GRAY);</span><br><span class="line">		<span class="comment">//直方图均衡化</span></span><br><span class="line">		equalizeHist(gray_image, gray_image);</span><br><span class="line">		face_cacade.detectMultiScale(gray_image, faces, <span class="number">1.1</span>, <span class="number">2</span>, <span class="number">0</span> | CV_HAAR_SCALE_IMAGE, Size(<span class="number">1</span>, <span class="number">1</span>));</span><br><span class="line">		<span class="comment">//框选出脸部区域</span></span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; faces.size(); i++)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="function">RNG <span class="title">rng</span><span class="params">(i)</span></span>;</span><br><span class="line">			Scalar color = Scalar(rng.uniform(<span class="number">0</span>, <span class="number">255</span>), rng.uniform(<span class="number">0</span>, <span class="number">255</span>), <span class="number">20</span>);</span><br><span class="line">			rectangle(srcImage, faces[<span class="keyword">static_cast</span>&lt;<span class="keyword">int</span>&gt;(i)], color, <span class="number">2</span>, <span class="number">8</span>, <span class="number">0</span>);</span><br><span class="line">		&#125;</span><br><span class="line">		imshow(<span class="string">"face"</span>, srcImage);</span><br><span class="line">		waitKey(<span class="number">30</span>);	<span class="comment">//延时30</span></span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	Mat srcImage;</span><br><span class="line"></span><br><span class="line">	srcImage = imread(<span class="string">"7.jpg"</span>);</span><br><span class="line"></span><br><span class="line">	CascadeClassifier face_cacade;</span><br><span class="line"></span><br><span class="line">	<span class="function">VideoCapture <span class="title">capture</span><span class="params">(<span class="number">0</span>)</span></span>;</span><br><span class="line">	<span class="keyword">if</span> (!face_cacade.load(<span class="string">"D:\\Project_OpenCV\\Cmake\\install\\etc\\haarcascades\\haarcascade_frontalface_alt.xml"</span>))</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"can not load the file...\n"</span>);</span><br><span class="line">		<span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">vector</span>&lt;Rect&gt; faces;</span><br><span class="line">	Mat gray_image;</span><br><span class="line">	cvtColor(srcImage, gray_image, CV_BGR2GRAY);</span><br><span class="line"></span><br><span class="line">	<span class="comment">//直方图均衡化</span></span><br><span class="line">	equalizeHist(gray_image, gray_image);</span><br><span class="line">	face_cacade.detectMultiScale(gray_image, faces, <span class="number">1.1</span>, <span class="number">2</span>, <span class="number">0</span> | CV_HAAR_SCALE_IMAGE, Size(<span class="number">1</span>, <span class="number">1</span>));</span><br><span class="line"></span><br><span class="line">	<span class="comment">//框选出脸部区域</span></span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; faces.size(); i++)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="function">RNG <span class="title">rng</span><span class="params">(i)</span></span>;</span><br><span class="line">		Scalar color = Scalar(rng.uniform(<span class="number">0</span>, <span class="number">255</span>), rng.uniform(<span class="number">0</span>, <span class="number">255</span>), <span class="number">20</span>);</span><br><span class="line">		rectangle(srcImage, faces[<span class="keyword">static_cast</span>&lt;<span class="keyword">int</span>&gt;(i)], color, <span class="number">2</span>, <span class="number">8</span>, <span class="number">0</span>);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	imshow(<span class="string">"face"</span>, srcImage);</span><br><span class="line">	waitKey(<span class="number">0</span>);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="基于OpenCV的运动物体追踪"><a href="#基于OpenCV的运动物体追踪" class="headerlink" title="基于OpenCV的运动物体追踪"></a>基于OpenCV的运动物体追踪</h3><blockquote>
+<p>给一段视频，程序对视频中运动的物体进行追踪，并用框框起来</p>
+</blockquote>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">////1.运动物体检测----背景减法</span></span><br><span class="line"><span class="comment">//#include &lt;iostream&gt;</span></span><br><span class="line"><span class="comment">//#include &lt;opencv2/opencv.hpp&gt;</span></span><br><span class="line"><span class="comment">//using namespace std;</span></span><br><span class="line"><span class="comment">//using namespace cv;</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">////运动物体检测函数声明</span></span><br><span class="line"><span class="comment">//Mat MoveDetect(Mat backgroung, Mat frame);</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">//int main()</span></span><br><span class="line"><span class="comment">//&#123;</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">//	VideoCapture video("move.avi");</span></span><br><span class="line"><span class="comment">//	if (!video.isOpened())</span></span><br><span class="line"><span class="comment">//	&#123;</span></span><br><span class="line"><span class="comment">//		printf("Oh, no, video is error");</span></span><br><span class="line"><span class="comment">//		return -1;</span></span><br><span class="line"><span class="comment">//	&#125;</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">//	int frameCount = video.get(CV_CAP_PROP_FRAME_COUNT); //获取帧数</span></span><br><span class="line"><span class="comment">//	double FPS = video.get(CV_CAP_PROP_FPS);//获取FPS</span></span><br><span class="line"><span class="comment">//	Mat frame; //存储帧</span></span><br><span class="line"><span class="comment">//	Mat background; //存储背景图像</span></span><br><span class="line"><span class="comment">//	Mat result; //存储结果图像</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">//	for (int i = 0; i &lt; frameCount; i++)</span></span><br><span class="line"><span class="comment">//	&#123;</span></span><br><span class="line"><span class="comment">//		video &gt;&gt; frame; //读帧进frame</span></span><br><span class="line"><span class="comment">//		imshow("frame", frame);</span></span><br><span class="line"><span class="comment">//		if (frame.empty()) //对帧进行异常检测</span></span><br><span class="line"><span class="comment">//		&#123;</span></span><br><span class="line"><span class="comment">//			cout &lt;&lt; "frame is empty" &lt;&lt; endl;</span></span><br><span class="line"><span class="comment">//			break;</span></span><br><span class="line"><span class="comment">//		&#125;</span></span><br><span class="line"><span class="comment">//		int framePosition = video.get(CV_CAP_PROP_POS_FRAMES); //获取帧位置(第几帧)</span></span><br><span class="line"><span class="comment">//		cout &lt;&lt; "framePosition: " &lt;&lt; framePosition &lt;&lt; endl;</span></span><br><span class="line"><span class="comment">//		if (framePosition == 1) //将第一帧作为背景图像</span></span><br><span class="line"><span class="comment">//			background = frame.clone();</span></span><br><span class="line"><span class="comment">//		result = MoveDetect(background, frame); //调用MoveDect()进行运动物体检测，返回值存入result</span></span><br><span class="line"><span class="comment">//		imshow("result", result);</span></span><br><span class="line"><span class="comment">//		if (waitKey(1000.0 / FPS) == 27) //按原FPS显示</span></span><br><span class="line"><span class="comment">//		&#123;</span></span><br><span class="line"><span class="comment">//			cout &lt;&lt; "ESC退出！" &lt;&lt; endl;</span></span><br><span class="line"><span class="comment">//			break;</span></span><br><span class="line"><span class="comment">//		&#125;</span></span><br><span class="line"><span class="comment">//	&#125;</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">//	return 0;</span></span><br><span class="line"><span class="comment">//&#125;</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">//Mat MoveDetect(Mat background, Mat frame)</span></span><br><span class="line"><span class="comment">//&#123;</span></span><br><span class="line"><span class="comment">//	Mat result = frame.clone();</span></span><br><span class="line"><span class="comment">//	//1.将background和frame转为灰度图</span></span><br><span class="line"><span class="comment">//	Mat gray1, gray2;</span></span><br><span class="line"><span class="comment">//	cvtColor(background, gray1, CV_BGR2GRAY);</span></span><br><span class="line"><span class="comment">//	cvtColor(frame, gray2, CV_BGR2GRAY);</span></span><br><span class="line"><span class="comment">//	//2.将background和frame做差</span></span><br><span class="line"><span class="comment">//	Mat diff;</span></span><br><span class="line"><span class="comment">//	absdiff(gray1, gray2, diff);</span></span><br><span class="line"><span class="comment">//	imshow("diff", diff);</span></span><br><span class="line"><span class="comment">//	//3. 对差值图diff_thresh进行阈值化处理</span></span><br><span class="line"><span class="comment">//	Mat diff_thresh;</span></span><br><span class="line"><span class="comment">//	threshold(diff, diff_thresh, 50, 255, CV_THRESH_BINARY);</span></span><br><span class="line"><span class="comment">//	imshow("diff_thresh", diff_thresh);</span></span><br><span class="line"><span class="comment">//	//4.腐蚀</span></span><br><span class="line"><span class="comment">//	Mat kernel_erode = getStructuringElement(MORPH_RECT, Size(3, 3));</span></span><br><span class="line"><span class="comment">//	Mat kernel_dilate = getStructuringElement(MORPH_RECT, Size(15, 15));</span></span><br><span class="line"><span class="comment">//	erode(diff_thresh, diff_thresh, kernel_erode);</span></span><br><span class="line"><span class="comment">//	imshow("erode", diff_thresh);</span></span><br><span class="line"><span class="comment">//	//5.膨胀</span></span><br><span class="line"><span class="comment">//	dilate(diff_thresh, diff_thresh, kernel_dilate);</span></span><br><span class="line"><span class="comment">//	imshow("dilate", diff_thresh);</span></span><br><span class="line"><span class="comment">//	//6.查找轮廓并绘制轮廓</span></span><br><span class="line"><span class="comment">//	vector&lt;vector&lt;Point&gt;&gt; contours;</span></span><br><span class="line"><span class="comment">//	findContours(diff_thresh, contours, CV_RETR_EXTERNAL, CV_CHAIN_APPROX_NONE);</span></span><br><span class="line"><span class="comment">//	drawContours(result, contours, -1, Scalar(0, 0, 255), 2);//在result上绘制轮廓</span></span><br><span class="line"><span class="comment">//	//7.查找正外接矩形</span></span><br><span class="line"><span class="comment">//	vector&lt;Rect&gt; boundRect(contours.size());</span></span><br><span class="line"><span class="comment">//	for (int i = 0; i &lt; contours.size(); i++)</span></span><br><span class="line"><span class="comment">//	&#123;</span></span><br><span class="line"><span class="comment">//		boundRect[i] = boundingRect(contours[i]);</span></span><br><span class="line"><span class="comment">//		rectangle(result, boundRect[i], Scalar(0, 255, 0), 2); //在result上绘制正外接矩阵</span></span><br><span class="line"><span class="comment">//	&#125;</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">//	return result; //返回result</span></span><br><span class="line"><span class="comment">//&#125;</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"opencv2/opencv.hpp"</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> cv;</span><br><span class="line"></span><br><span class="line"><span class="function">Mat <span class="title">MoveDetect</span><span class="params">(Mat frame1, Mat frame2)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	Mat result = frame2.clone();</span><br><span class="line">	Mat gray1, gray2;</span><br><span class="line">	cvtColor(frame1, gray1, CV_BGR2GRAY);</span><br><span class="line">	cvtColor(frame2, gray2, CV_BGR2GRAY);</span><br><span class="line"></span><br><span class="line">	Mat diff;</span><br><span class="line">	absdiff(gray1, gray2, diff);</span><br><span class="line">	imshow(<span class="string">"absdiss"</span>, diff);</span><br><span class="line">	threshold(diff, diff, <span class="number">45</span>, <span class="number">255</span>, CV_THRESH_BINARY);</span><br><span class="line">	imshow(<span class="string">"threshold"</span>, diff);</span><br><span class="line"></span><br><span class="line">	Mat element = getStructuringElement(MORPH_RECT, Size(<span class="number">3</span>, <span class="number">3</span>));</span><br><span class="line">	Mat element2 = getStructuringElement(MORPH_RECT, Size(<span class="number">25</span>, <span class="number">25</span>));</span><br><span class="line">	erode(diff, diff, element);</span><br><span class="line">	imshow(<span class="string">"erode"</span>, diff);</span><br><span class="line"></span><br><span class="line">	dilate(diff, diff, element2);</span><br><span class="line">	imshow(<span class="string">"dilate"</span>, diff);</span><br><span class="line"></span><br><span class="line">	<span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;Point&gt;&gt; contours;</span><br><span class="line">	<span class="built_in">vector</span>&lt;Vec4i&gt; hierarcy;</span><br><span class="line">	<span class="comment">//画椭圆及中心</span></span><br><span class="line">	findContours(diff, contours, hierarcy, CV_RETR_EXTERNAL, CV_CHAIN_APPROX_NONE);</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="string">"num="</span> &lt;&lt; contours.size() &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	<span class="built_in">vector</span>&lt;RotatedRect&gt; box(contours.size());</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i&lt;contours.size(); i++)</span><br><span class="line">	&#123;</span><br><span class="line">		box[i] = fitEllipse(Mat(contours[i]));</span><br><span class="line">		ellipse(result, box[i], Scalar(<span class="number">0</span>, <span class="number">255</span>, <span class="number">0</span>), <span class="number">2</span>, <span class="number">8</span>);</span><br><span class="line">		circle(result, box[i].center, <span class="number">3</span>, Scalar(<span class="number">0</span>, <span class="number">0</span>, <span class="number">255</span>), <span class="number">-1</span>, <span class="number">8</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="function">VideoCapture <span class="title">cap</span><span class="params">(<span class="string">"move.avi"</span>)</span></span>;</span><br><span class="line">	<span class="keyword">if</span> (!cap.isOpened()) <span class="comment">//检查打开是否成功</span></span><br><span class="line">		<span class="keyword">return</span>;</span><br><span class="line">	Mat frame;</span><br><span class="line">	Mat result;</span><br><span class="line">	Mat background;</span><br><span class="line">	<span class="keyword">int</span> count = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">while</span> (<span class="number">1</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		cap &gt;&gt; frame;</span><br><span class="line">		<span class="keyword">if</span> (frame.empty())</span><br><span class="line">			<span class="keyword">break</span>;</span><br><span class="line">		<span class="keyword">else</span> &#123;</span><br><span class="line">			count++;</span><br><span class="line">			<span class="keyword">if</span> (count == <span class="number">1</span>)</span><br><span class="line">				background = frame.clone(); <span class="comment">//提取第一帧为背景帧</span></span><br><span class="line">			imshow(<span class="string">"video"</span>, frame);</span><br><span class="line">			result = MoveDetect(background, frame);</span><br><span class="line">			imshow(<span class="string">"result"</span>, result);</span><br><span class="line">			<span class="keyword">if</span> (waitKey(<span class="number">50</span>) == <span class="number">27</span>)</span><br><span class="line">				<span class="keyword">break</span>;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	cap.release();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">////2.运动物体检测----帧查法</span></span><br><span class="line"><span class="comment">//#include &lt;iostream&gt;</span></span><br><span class="line"><span class="comment">//#include &lt;opencv2/opencv.hpp&gt;</span></span><br><span class="line"><span class="comment">//using namespace std;</span></span><br><span class="line"><span class="comment">//using namespace cv;</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">//Mat MoveDetect(Mat background, Mat frame);</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">//int main()</span></span><br><span class="line"><span class="comment">//&#123;</span></span><br><span class="line"><span class="comment">//	VideoCapture video("move.avi");</span></span><br><span class="line"><span class="comment">//	if (!video.isOpened())</span></span><br><span class="line"><span class="comment">//	&#123;</span></span><br><span class="line"><span class="comment">//		printf("Oh, no, video is error");</span></span><br><span class="line"><span class="comment">//		return -1;</span></span><br><span class="line"><span class="comment">//	&#125;</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">//	int frameCount = video.get(CV_CAP_PROP_FRAME_COUNT);</span></span><br><span class="line"><span class="comment">//	double FPS = video.get(CV_CAP_PROP_FPS);</span></span><br><span class="line"><span class="comment">//	Mat frame;</span></span><br><span class="line"><span class="comment">//	Mat background;</span></span><br><span class="line"><span class="comment">//	Mat result;</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">//	for(int i = 0; i &lt; frameCount; i++)</span></span><br><span class="line"><span class="comment">//	&#123;</span></span><br><span class="line"><span class="comment">//		video &gt;&gt; frame;</span></span><br><span class="line"><span class="comment">//		imshow("frame", frame);</span></span><br><span class="line"><span class="comment">//		if (frame.empty())</span></span><br><span class="line"><span class="comment">//		&#123;</span></span><br><span class="line"><span class="comment">//			printf("frame is empty!");</span></span><br><span class="line"><span class="comment">//			break;</span></span><br><span class="line"><span class="comment">//		&#125;</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">//		if (i == 0)</span></span><br><span class="line"><span class="comment">//		&#123;</span></span><br><span class="line"><span class="comment">//			result = MoveDetect(frame, frame);</span></span><br><span class="line"><span class="comment">//		&#125;</span></span><br><span class="line"><span class="comment">//		else</span></span><br><span class="line"><span class="comment">//		&#123;</span></span><br><span class="line"><span class="comment">//			result = MoveDetect(background, frame);</span></span><br><span class="line"><span class="comment">//		&#125;</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">//		imshow("result", result);</span></span><br><span class="line"><span class="comment">//		if (waitKey(1000.0 / FPS) == 27)</span></span><br><span class="line"><span class="comment">//			break;</span></span><br><span class="line"><span class="comment">//		background = frame.clone();</span></span><br><span class="line"><span class="comment">//	&#125;</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">//	return 0;</span></span><br><span class="line"><span class="comment">//&#125;</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">//Mat MoveDetect(Mat background, Mat frame)</span></span><br><span class="line"><span class="comment">//&#123;</span></span><br><span class="line"><span class="comment">//	Mat result = frame.clone();</span></span><br><span class="line"><span class="comment">//	Mat gray1, gray2;</span></span><br><span class="line"><span class="comment">//	cvtColor(background, gray1, CV_BGR2GRAY);</span></span><br><span class="line"><span class="comment">//	cvtColor(frame, gray2, CV_BGR2GRAY);</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">//	Mat diff;</span></span><br><span class="line"><span class="comment">//	absdiff(gray1, gray2, diff);</span></span><br><span class="line"><span class="comment">//	imshow("diff", diff);</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">//	Mat diff_thresh;</span></span><br><span class="line"><span class="comment">//	threshold(diff, diff_thresh, 50, 255, CV_THRESH_BINARY);</span></span><br><span class="line"><span class="comment">//	imshow("threshold", diff_thresh);</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">//	Mat kernel_erode = getStructuringElement(MORPH_RECT, Size(3, 3));</span></span><br><span class="line"><span class="comment">//	Mat kernel_dilate = getStructuringElement(MORPH_RECT, Size(18, 18));</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">//	erode(diff_thresh, diff_thresh, kernel_erode);</span></span><br><span class="line"><span class="comment">//	imshow("erode", diff_thresh);</span></span><br><span class="line"><span class="comment">//	dilate(diff_thresh, diff_thresh, kernel_dilate);</span></span><br><span class="line"><span class="comment">//	imshow("dilate", diff_thresh);</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">//	vector&lt;vector&lt;Point&gt;&gt; contours;</span></span><br><span class="line"><span class="comment">//	findContours(diff_thresh, contours, CV_RETR_EXTERNAL, CV_CHAIN_APPROX_NONE);</span></span><br><span class="line"><span class="comment">//	drawContours(result, contours, -1, Scalar(0, 0, 255), 2);</span></span><br><span class="line"><span class="comment">// </span></span><br><span class="line"><span class="comment">//	vector&lt;Rect&gt; boundRect(contours.size());</span></span><br><span class="line"><span class="comment">//	for (int i = 0; i &lt; contours.size(); i++)</span></span><br><span class="line"><span class="comment">//	&#123;</span></span><br><span class="line"><span class="comment">//		boundRect[i] = boundingRect(contours[i]);</span></span><br><span class="line"><span class="comment">//		rectangle(result, boundRect[i], Scalar(0, 255, 0), 2);</span></span><br><span class="line"><span class="comment">//	&#125;</span></span><br><span class="line"><span class="comment">//	return result;</span></span><br><span class="line"><span class="comment">//&#125;</span></span><br></pre></td></tr></table></figure>
+<h3 id="基于Opencv的数字图像识别"><a href="#基于Opencv的数字图像识别" class="headerlink" title="基于Opencv的数字图像识别"></a>基于Opencv的数字图像识别</h3><blockquote>
+<p>准备：<br>1.10个模板图像<br>2.相似度检测函数、轮廓检测函数<br>具体内容：<br>1.读入10个模板图像<br>2.对目标图像进行轮廓检测并剪切出识别的数字<br>3.对剪切出的数字与10个模板图像相似度计算挑选出最相似的</p>
+</blockquote>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;opencv2/opencv.hpp&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> cv;</span><br><span class="line"></span><br><span class="line">Mat srcImage, dstImage;</span><br><span class="line"><span class="built_in">vector</span>&lt;Mat&gt; vec;</span><br><span class="line"><span class="built_in">vector</span>&lt;Mat&gt; tutu;</span><br><span class="line"></span><br><span class="line"><span class="comment">//相似性函数</span></span><br><span class="line"><span class="function"><span class="keyword">float</span> <span class="title">isSimilar</span><span class="params">(Mat &amp;src, Mat &amp;dst)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="comment">// 先定义两个图片的矩阵</span></span><br><span class="line">	Mat src_copy, dst_copy;</span><br><span class="line">	<span class="comment">// resize(dst, src.row, src.col);</span></span><br><span class="line">	<span class="comment">// 讲两个图片缩放到src的尺寸上，并且用新的矩阵来储存</span></span><br><span class="line">	resize(src, src_copy, src.size(), <span class="number">0</span>, <span class="number">0</span>, INTER_LINEAR);</span><br><span class="line">	resize(dst, dst_copy, src.size(), <span class="number">0</span>, <span class="number">0</span>, INTER_LINEAR);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	<span class="keyword">float</span> same = <span class="number">0</span>, diff = <span class="number">0</span>;</span><br><span class="line">	<span class="comment">// 两层for循环访问所有的元素点</span></span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; src_copy.rows; i++)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; src_copy.cols; j++)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="comment">// 如果像素相同，那么same加1</span></span><br><span class="line">			<span class="comment">// 这里的代码明明是学习笔记上的，要好好看啊</span></span><br><span class="line">			<span class="keyword">if</span> (src_copy.at&lt;uchar&gt;(i, j) == dst_copy.at&lt;uchar&gt;(i, j))</span><br><span class="line">				same += <span class="number">1</span>;</span><br><span class="line">			<span class="comment">// 如果像素不同，那么diff加1</span></span><br><span class="line">			<span class="keyword">else</span></span><br><span class="line">				diff += <span class="number">1</span>;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">// 返回相似度</span></span><br><span class="line">	<span class="keyword">return</span> same / (same + diff);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//轮廓检测函数</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">isContours</span><span class="params">(Mat &amp;src)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	Mat img_gray;</span><br><span class="line">	resize(src, img_gray, src.size(), <span class="number">0</span>, <span class="number">0</span>, INTER_LINEAR);</span><br><span class="line"></span><br><span class="line">	cvtColor(src, img_gray, CV_BGR2GRAY);</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 注意在取阈值的时候，最后一个参数</span></span><br><span class="line">	threshold(img_gray, dstImage, <span class="number">100</span>, <span class="number">255</span>, CV_THRESH_BINARY);</span><br><span class="line"></span><br><span class="line">	<span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;Point&gt; &gt; contours;</span><br><span class="line">	<span class="built_in">vector</span>&lt;Vec4i&gt; hierarchy;</span><br><span class="line">	<span class="comment">// 注意这里的第四个参数，决定了检测的准确性</span></span><br><span class="line">	findContours(dstImage, contours, hierarchy, RETR_EXTERNAL, CHAIN_APPROX_SIMPLE, Point(<span class="number">0</span>, <span class="number">0</span>));</span><br><span class="line"></span><br><span class="line">	<span class="function">RNG <span class="title">rng</span><span class="params">(<span class="number">0</span>)</span></span>;</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; contours.size(); i++)</span><br><span class="line">	&#123;</span><br><span class="line">		Scalar color = Scalar(rng.uniform(<span class="number">0</span>, <span class="number">255</span>), rng.uniform(<span class="number">0</span>, <span class="number">255</span>), rng.uniform(<span class="number">0</span>, <span class="number">255</span>));</span><br><span class="line">		Rect rect = boundingRect(contours[i]);<span class="comment">//检测外轮廓</span></span><br><span class="line">		Mat temp = src(rect);</span><br><span class="line"></span><br><span class="line">		imwrite(<span class="string">"shacun"</span> + to_string(i) + <span class="string">".png"</span>, temp);</span><br><span class="line">		rectangle(src, rect, Scalar(<span class="number">0</span>, <span class="number">0</span>, <span class="number">255</span>), <span class="number">3</span>);<span class="comment">//对外轮廓加矩形框</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="comment">//调用轮廓检测函数</span></span><br><span class="line">	srcImage = imread(<span class="string">"digits_4.jpg"</span>);</span><br><span class="line">	<span class="keyword">if</span> (!srcImage.data)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"Oh, no, srcImage is error"</span>);</span><br><span class="line">		<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">// 轮廓检测并保存数据</span></span><br><span class="line">	isContours(srcImage);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	<span class="comment">//调用相似性函数</span></span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">10</span>; i++)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="comment">//模板10个图像</span></span><br><span class="line">		Mat s_src = imread(<span class="string">"tutu"</span> + to_string(i) + <span class="string">".png"</span>);</span><br><span class="line">		vec.push_back(s_src);</span><br><span class="line"></span><br><span class="line">		<span class="comment">//切割的10个图像</span></span><br><span class="line">		Mat tu = imread(<span class="string">"shacun"</span> + to_string(i) + <span class="string">".png"</span>);</span><br><span class="line">		tutu.push_back(tu);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; <span class="number">10</span>; j++)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">int</span> val = <span class="number">-1</span>;</span><br><span class="line">		<span class="keyword">float</span> maxSim = <span class="number">0</span>;</span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">10</span>; i++)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">float</span> sim = <span class="number">0</span>;</span><br><span class="line">			sim = isSimilar(vec[i], tutu[j]);</span><br><span class="line">			<span class="keyword">if</span> (maxSim &lt;= sim)</span><br><span class="line">			&#123;</span><br><span class="line">				maxSim = sim;</span><br><span class="line">				val = i;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		imshow(<span class="string">"aim is "</span>, tutu[j]);</span><br><span class="line">		imshow(<span class="string">"model is "</span>, vec[val]);</span><br><span class="line">		waitKey(<span class="number">0</span>);</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; <span class="string">" the val is "</span> &lt;&lt; val &lt;&lt; <span class="string">" the sim is  "</span> &lt;&lt; maxSim &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line"></span><br><span class="line">	system(<span class="string">"pause"</span>);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;opencv2/opencv.hpp&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> cv;</span><br><span class="line"></span><br><span class="line">Mat srcImage, dstImage;</span><br><span class="line"><span class="built_in">vector</span>&lt;Mat&gt; vec;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">代码如何理解</span></span><br><span class="line"><span class="comment">从main函数开始，首先调用init函数</span></span><br><span class="line"><span class="comment">我们用init函数来加载模板图像到全局的数组vec里面</span></span><br><span class="line"><span class="comment">然后调用isContours函数，使用isContours函数对目标图片检测</span></span><br><span class="line"><span class="comment">检测完成后，接着就调用predict函数来预测轮廓检测的数数字</span></span><br><span class="line"><span class="comment">在predict函数里面，我们调用isSimilar函数来检测出最相似的模板图片</span></span><br><span class="line"><span class="comment">然后，输出对应的数字</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// 函数声明</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">init</span><span class="params">()</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">isContours</span><span class="params">(Mat &amp;src)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">float</span> <span class="title">isSimilar</span><span class="params">(Mat &amp;src, Mat &amp;dst)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">predict</span><span class="params">(Mat &amp;dst)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 初始化加载模板函数</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">init</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="comment">// 初始化函数，用来加载模板图片</span></span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">10</span>; i++)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="comment">//模板10个图像</span></span><br><span class="line">		Mat s_src = imread(<span class="string">"tutu"</span> + to_string(i) + <span class="string">".png"</span>);</span><br><span class="line">		vec.push_back(s_src);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="string">"***************"</span> &lt;&lt; <span class="string">"init is OK."</span> &lt;&lt; <span class="string">"***************"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 预测函数</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">predict</span><span class="params">(Mat &amp;dst)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="comment">// 检测数字函数</span></span><br><span class="line">	<span class="keyword">int</span> val = <span class="number">-1</span>;</span><br><span class="line">	<span class="keyword">float</span> maxSim = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">10</span>; i++)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="comment">// cvtColor(vec[i], vec[i], CV_BGR2GRAY);</span></span><br><span class="line">		<span class="comment">// threshold(vec[j], vec[j], 100, 255, CV_THRESH_BINARY);</span></span><br><span class="line"></span><br><span class="line">		<span class="keyword">float</span> sim = <span class="number">0</span>;</span><br><span class="line">		sim = isSimilar(vec[i], dst);</span><br><span class="line">		<span class="keyword">if</span> (maxSim &lt;= sim)</span><br><span class="line">		&#123;</span><br><span class="line">			maxSim = sim;</span><br><span class="line">			val = i;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	imshow(<span class="string">"aim is "</span>, dst);</span><br><span class="line">	imshow(<span class="string">"model is "</span>, vec[val]);</span><br><span class="line">	waitKey(<span class="number">0</span>);</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="string">" the val is "</span> &lt;&lt; val &lt;&lt; <span class="string">" the sim is  "</span> &lt;&lt; maxSim &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">//轮廓检测函数</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">isContours</span><span class="params">(Mat &amp;src)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	Mat img_gray;</span><br><span class="line">	resize(src, img_gray, src.size(), <span class="number">0</span>, <span class="number">0</span>, INTER_LINEAR);</span><br><span class="line"></span><br><span class="line">	cvtColor(src, img_gray, CV_BGR2GRAY);</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 注意在取阈值的时候，最后一个参数</span></span><br><span class="line">	threshold(img_gray, dstImage, <span class="number">100</span>, <span class="number">255</span>, CV_THRESH_BINARY);</span><br><span class="line"></span><br><span class="line">	<span class="comment">// imshow("thre",dstImage);</span></span><br><span class="line"></span><br><span class="line">	<span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;Point&gt; &gt; contours;</span><br><span class="line">	<span class="built_in">vector</span>&lt;Vec4i&gt; hierarchy;</span><br><span class="line">	<span class="comment">// 注意这里的第四个参数，决定了检测的准确性</span></span><br><span class="line">	findContours(dstImage, contours, hierarchy, RETR_EXTERNAL, CHAIN_APPROX_SIMPLE, Point(<span class="number">0</span>, <span class="number">0</span>));</span><br><span class="line"></span><br><span class="line">	<span class="function">RNG <span class="title">rng</span><span class="params">(<span class="number">0</span>)</span></span>;</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; contours.size(); i++)</span><br><span class="line">	&#123;</span><br><span class="line">		Scalar color = Scalar(rng.uniform(<span class="number">0</span>, <span class="number">255</span>), rng.uniform(<span class="number">0</span>, <span class="number">255</span>), rng.uniform(<span class="number">0</span>, <span class="number">255</span>));</span><br><span class="line">		Rect rect = boundingRect(contours[i]);<span class="comment">//检测外轮廓</span></span><br><span class="line">	    <span class="comment">// rectangle(src, rect, Scalar(0, 0, 255), 3);//对外轮廓加矩形框</span></span><br><span class="line">		Mat dst = src(rect);</span><br><span class="line">		<span class="comment">// 预测函数</span></span><br><span class="line">		predict(dst);</span><br><span class="line">		<span class="comment">// imwrite("../shacun/" + to_string(i) + ".png", temp);</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">// imshow("src",src);</span></span><br><span class="line">	<span class="comment">// waitKey(0);</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">//相似性函数</span></span><br><span class="line"><span class="function"><span class="keyword">float</span> <span class="title">isSimilar</span><span class="params">(Mat &amp;src, Mat &amp;dst)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="comment">// 先定义两个图片的矩阵</span></span><br><span class="line">	Mat src_copy, dst_copy;</span><br><span class="line">	<span class="comment">// resize(dst, src.row, src.col);</span></span><br><span class="line">	<span class="comment">// 讲两个图片缩放到src的尺寸上，并且用新的矩阵来储存</span></span><br><span class="line">	resize(src, src_copy, src.size(), <span class="number">0</span>, <span class="number">0</span>, INTER_LINEAR);</span><br><span class="line">	resize(dst, dst_copy, src.size(), <span class="number">0</span>, <span class="number">0</span>, INTER_LINEAR);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">float</span> same = <span class="number">0</span>, diff = <span class="number">0</span>;</span><br><span class="line">	<span class="comment">// 两层for循环访问所有的元素点</span></span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; src_copy.rows; i++)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; src_copy.cols; j++)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="comment">// 如果像素相同，那么same加1</span></span><br><span class="line">			<span class="comment">// 这里的代码明明是学习笔记上的，要好好看啊</span></span><br><span class="line">			<span class="keyword">if</span> (src_copy.at&lt;uchar&gt;(i, j) == dst_copy.at&lt;uchar&gt;(i, j))</span><br><span class="line">				same += <span class="number">1</span>;</span><br><span class="line">			<span class="comment">// 如果像素不同，那么diff加1</span></span><br><span class="line">			<span class="keyword">else</span></span><br><span class="line">				diff += <span class="number">1</span>;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">// 返回相似度</span></span><br><span class="line">	<span class="keyword">return</span> same / (same + diff);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="comment">// init初始化函数加载模板图片</span></span><br><span class="line">	init();</span><br><span class="line">	<span class="comment">//调用轮廓检测函数</span></span><br><span class="line">	srcImage = imread(<span class="string">"digits_4.jpg"</span>);</span><br><span class="line">	<span class="keyword">if</span> (!srcImage.data)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"Oh, no, srcImage is error"</span>);</span><br><span class="line">		<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">// 轮廓检测并保存数据</span></span><br><span class="line">	isContours(srcImage);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">////基于OpenCV的数字识别</span></span><br><span class="line"><span class="comment">//#include &lt;iostream&gt;</span></span><br><span class="line"><span class="comment">//#include &lt;opencv2/opencv.hpp&gt;</span></span><br><span class="line"><span class="comment">//#include &lt;vector&gt;</span></span><br><span class="line"><span class="comment">//using namespace std;</span></span><br><span class="line"><span class="comment">//using namespace cv;</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">//Mat srcImage, dstImage;</span></span><br><span class="line"><span class="comment">//Mat imgROI;</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">//int main()</span></span><br><span class="line"><span class="comment">//&#123;</span></span><br><span class="line"><span class="comment">//	srcImage = imread("digits_4.jpg");</span></span><br><span class="line"><span class="comment">//	if (!srcImage.data)</span></span><br><span class="line"><span class="comment">//	&#123;</span></span><br><span class="line"><span class="comment">//		printf("Oh, no, srcImage is error");</span></span><br><span class="line"><span class="comment">//		return false;</span></span><br><span class="line"><span class="comment">//	&#125;</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">//	imshow("srcImage", srcImage);</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">//	cvtColor(srcImage, srcImage, CV_BGR2GRAY);</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">//	threshold(srcImage, dstImage, 100, 255, CV_THRESH_BINARY);</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">//	/*Mat kernel_erode = getStructuringElement(MORPH_RECT, Size(3, 3));</span></span><br><span class="line"><span class="comment">//	Mat kernel_dilate = getStructuringElement(MORPH_RECT, Size(15, 15));</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">//	erode(dstImage, dstImage, kernel_erode);</span></span><br><span class="line"><span class="comment">//	dilate(dstImage, dstImage, kernel_dilate);*/</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">//	vector&lt;vector&lt;Point&gt; &gt; contours;</span></span><br><span class="line"><span class="comment">//	vector&lt;Vec4i&gt; hierarchy;</span></span><br><span class="line"><span class="comment">//	findContours(dstImage, contours, RETR_TREE, CHAIN_APPROX_SIMPLE, Point(0, 0));</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">//	RNG rng(0);</span></span><br><span class="line"><span class="comment">//	for (int i = 0; i &lt; contours.size(); i++)</span></span><br><span class="line"><span class="comment">//	&#123;</span></span><br><span class="line"><span class="comment">//		Scalar color = Scalar(rng.uniform(0, 255), rng.uniform(0, 255), rng.uniform(0, 255));</span></span><br><span class="line"><span class="comment">//		drawContours(dstImage, contours, i, color, 2, 8, hierarchy, 0, Point(0, 0));</span></span><br><span class="line"><span class="comment">//		Rect rect = boundingRect(contours[i]);</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">//		//imgROI = dstImage(Rect(rect.x, rect.y, rect.width, rect.height ));</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">//		//imwrite("imgROI" + to_string(i) + ".png", imgROI);</span></span><br><span class="line"><span class="comment">//		cout &lt;&lt; " the area is " &lt;&lt; contourArea(contours[i]) &lt;&lt; endl;</span></span><br><span class="line"><span class="comment">//		cout &lt;&lt; "contours" &lt;&lt; i &lt;&lt; " height =" &lt;&lt; rect.height &lt;&lt; " width = " &lt;&lt; rect.width &lt;&lt; " rate = " &lt;&lt; ((float)rect.width / rect.height) &lt;&lt; endl;</span></span><br><span class="line"><span class="comment">//		Mat temp = srcImage(rect);</span></span><br><span class="line"><span class="comment">//		// imshow("tmp ",temp);</span></span><br><span class="line"><span class="comment">//		// cout &lt;&lt; " temp shape is " &lt;&lt; rect.x &lt;&lt; " " &lt;&lt; rect.y &lt;&lt; " " &lt;&lt; endl;</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">//		if(rect.height &gt;= 60 &amp;&amp; rect.width &gt;= 30)</span></span><br><span class="line"><span class="comment">//		&#123;</span></span><br><span class="line"><span class="comment">//			imwrite("digits" + to_string(i) + ".png", temp);</span></span><br><span class="line"><span class="comment">//		&#125;</span></span><br><span class="line"><span class="comment">//		</span></span><br><span class="line"><span class="comment">//		rectangle(dstImage, rect, Scalar(0, 0, 255), 3);//对外轮廓加矩形框</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">//	&#125;</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">//	imshow("dstImage", dstImage);</span></span><br><span class="line"><span class="comment">//	</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">//	waitKey(0);</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">//	return 0;</span></span><br><span class="line"><span class="comment">//&#125;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;opencv2/opencv.hpp&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> cv;</span><br><span class="line"></span><br><span class="line">Mat srcImage, dstImage;</span><br><span class="line">Mat dst;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	srcImage = imread(<span class="string">"digits_3.png"</span>);</span><br><span class="line">	Mat img_gray;</span><br><span class="line">	cvtColor(srcImage, img_gray, CV_BGR2GRAY);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> (!srcImage.data)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"Oh, no, srcImage is error"</span>);</span><br><span class="line">		<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	namedWindow(<span class="string">"gray"</span>, CV_WINDOW_AUTOSIZE);</span><br><span class="line">	imshow(<span class="string">"gray"</span>, img_gray);</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 注意在取阈值的时候，最后一个参数</span></span><br><span class="line">	threshold(img_gray, dstImage, <span class="number">100</span>, <span class="number">255</span>, CV_THRESH_BINARY);</span><br><span class="line">	<span class="comment">//threshold(img_gray, dstImage, 100, 255, CV_THRESH_BINARY_INV);</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	namedWindow(<span class="string">"Threshold"</span>, CV_WINDOW_AUTOSIZE);</span><br><span class="line">	imshow(<span class="string">"Threshold"</span>, dstImage);</span><br><span class="line"></span><br><span class="line">	<span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;Point&gt; &gt; contours;</span><br><span class="line">	<span class="built_in">vector</span>&lt;Vec4i&gt; hierarchy;</span><br><span class="line">	<span class="comment">// 注意这里的第四个参数，决定了检测的准确性</span></span><br><span class="line">	findContours(dstImage, contours, hierarchy, RETR_EXTERNAL, CHAIN_APPROX_SIMPLE, Point(<span class="number">0</span>, <span class="number">0</span>));</span><br><span class="line"></span><br><span class="line">	<span class="comment">// imshow("dstImage", dstImage);</span></span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; srcImage.rows &lt;&lt; <span class="string">" "</span> &lt;&lt; srcImage.cols;</span><br><span class="line">	<span class="function">RNG <span class="title">rng</span><span class="params">(<span class="number">0</span>)</span></span>;</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; contours.size(); i++)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; <span class="string">" i is "</span> &lt;&lt; i &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">		Scalar color = Scalar(rng.uniform(<span class="number">0</span>, <span class="number">255</span>), rng.uniform(<span class="number">0</span>, <span class="number">255</span>), rng.uniform(<span class="number">0</span>, <span class="number">255</span>));</span><br><span class="line">		<span class="comment">// drawContours(srcImage, contours, i, color, 2, 8, hierarchy, 0, Point(0,0));</span></span><br><span class="line">		Rect rect = boundingRect(contours[i]);<span class="comment">//检测外轮廓</span></span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; <span class="string">" the area is "</span> &lt;&lt; contourArea(contours[i]) &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; <span class="string">"contours"</span> &lt;&lt; i &lt;&lt; <span class="string">"height="</span> &lt;&lt; rect.height &lt;&lt; <span class="string">"width ="</span> &lt;&lt; rect.width &lt;&lt; <span class="string">"rate ="</span> &lt;&lt; ((<span class="keyword">float</span>)rect.width / rect.height) &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">		Mat temp = srcImage(rect);</span><br><span class="line">		<span class="comment">// imshow("tmp ",temp);</span></span><br><span class="line">		<span class="comment">// cout &lt;&lt; " temp shape is " &lt;&lt; rect.x &lt;&lt; " " &lt;&lt; rect.y &lt;&lt; " " &lt;&lt; endl;</span></span><br><span class="line">		<span class="comment">// if(rect.height &gt;= 60 &amp;&amp; rect.width &gt;= 30)</span></span><br><span class="line">		imwrite(<span class="string">"tutu"</span> + to_string(i) + <span class="string">".png"</span>, temp);</span><br><span class="line">		rectangle(srcImage, rect, Scalar(<span class="number">0</span>, <span class="number">0</span>, <span class="number">255</span>), <span class="number">3</span>);<span class="comment">//对外轮廓加矩形框</span></span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	namedWindow(<span class="string">"output"</span>, CV_WINDOW_AUTOSIZE);</span><br><span class="line">	imshow(<span class="string">"output"</span>, srcImage);</span><br><span class="line"></span><br><span class="line">	waitKey(<span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/OpenCV/" rel="tag"># OpenCV</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/03/28/OpenCV/OpenCV之feature2d组件/" rel="next" title="OpenCV之feature2d组件">
+                <i class="fa fa-chevron-left"></i> OpenCV之feature2d组件
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/03/28/OpenCV/OpenCV计算机视觉编程攻略/" rel="prev" title="OpenCV计算机视觉编程攻略">
+                OpenCV计算机视觉编程攻略 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="https://blog-1253453438.cos.ap-beijing.myqcloud.com/hexo_icon/lq.jpg" alt="晴宝宝">
+          <p class="site-author-name" itemprop="name">晴宝宝</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/index.html">
+                <span class="site-state-item-count">147</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">14</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/lvqing17" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#计算两个矩阵的相似性"><span class="nav-number">1.</span> <span class="nav-text">计算两个矩阵的相似性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#画三角形、圆形检测出来"><span class="nav-number">2.</span> <span class="nav-text">画三角形、圆形检测出来</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Haar特征与Viola-Joines人脸检测"><span class="nav-number">3.</span> <span class="nav-text">Haar特征与Viola-Joines人脸检测</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#基于OpenCV的运动物体追踪"><span class="nav-number">4.</span> <span class="nav-text">基于OpenCV的运动物体追踪</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#基于Opencv的数字图像识别"><span class="nav-number">5.</span> <span class="nav-text">基于Opencv的数字图像识别</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy;  2017 - 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">晴宝宝</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+  
+  <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+  
+
+
+  
+  
+  
+  <script type="text/javascript" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js"></script>
+  
+
+</body>
+</html>

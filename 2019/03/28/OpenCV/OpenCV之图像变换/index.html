@@ -1,0 +1,801 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="OpenCV,">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="https://blog-1253453438.cos.ap-beijing.myqcloud.com/hexo_icon/L_0(%E5%B7%B2%E5%8E%BB%E5%BA%95).png?v=5.1.0">
+
+
+
+
+
+
+<meta name="description" content="边缘检测：canny算子、sobel算子、Laplace算子、Scharr滤波器 霍夫变换 重映射 仿射变换">
+<meta name="keywords" content="OpenCV">
+<meta property="og:type" content="article">
+<meta property="og:title" content="OpenCV之图像变换">
+<meta property="og:url" content="http://lvqing17.github.io/2019/03/28/OpenCV/OpenCV之图像变换/index.html">
+<meta property="og:site_name" content="晴宝">
+<meta property="og:description" content="边缘检测：canny算子、sobel算子、Laplace算子、Scharr滤波器 霍夫变换 重映射 仿射变换">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-03-28T06:09:10.797Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="OpenCV之图像变换">
+<meta name="twitter:description" content="边缘检测：canny算子、sobel算子、Laplace算子、Scharr滤波器 霍夫变换 重映射 仿射变换">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 'undefined',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://lvqing17.github.io/2019/03/28/OpenCV/OpenCV之图像变换/">
+
+
+
+
+
+  <title> OpenCV之图像变换 | 晴宝 </title>
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+ 
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+  
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+	<a target="_blank" href="https://github.com/lvqing17"><img style="position: absolute; top: 0; left: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_left_gray_6d6d6d.png" alt="Fork me on GitHub"></a>
+
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">晴宝</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">吃饱好减肥</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/index.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/index.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/index.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/index.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope="" itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://lvqing17.github.io/2019/03/28/OpenCV/OpenCV之图像变换/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="晴宝宝">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://blog-1253453438.cos.ap-beijing.myqcloud.com/hexo_icon/lq.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="晴宝">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                OpenCV之图像变换
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-28T09:15:50+08:00">
+                2019-03-28
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/OpenCV/" itemprop="url" rel="index">
+                    <span itemprop="name">OpenCV</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  2.7k 字
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长" }}"="">
+                  14 分钟
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>边缘检测：canny算子、sobel算子、Laplace算子、Scharr滤波器</p>
+<p>霍夫变换</p>
+<p>重映射</p>
+<p>仿射变换</p>
+</blockquote>
+<a id="more"></a>
+<h3 id="边缘检测"><a href="#边缘检测" class="headerlink" title="边缘检测"></a>边缘检测</h3><h4 id="canny算子、sobel算子、Laplace算子、Scharr滤波器"><a href="#canny算子、sobel算子、Laplace算子、Scharr滤波器" class="headerlink" title="canny算子、sobel算子、Laplace算子、Scharr滤波器"></a>canny算子、sobel算子、Laplace算子、Scharr滤波器</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;opencv2/opencv.hpp&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;opencv2/imgproc/imgproc.hpp&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;opencv2/highgui/highgui.hpp&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> cv;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	Mat srcImage = imread(<span class="string">"4.jpg"</span>);</span><br><span class="line">	<span class="keyword">if</span> (!srcImage.data)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"Oh, no, srcImage is error"</span>);</span><br><span class="line">		<span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line"></span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	namedWindow(<span class="string">"srcImage"</span>);</span><br><span class="line">	namedWindow(<span class="string">"Canny1"</span>);</span><br><span class="line">	namedWindow(<span class="string">"Canny2"</span>);</span><br><span class="line">	namedWindow(<span class="string">"Sobel"</span>);</span><br><span class="line">	namedWindow(<span class="string">"Laplace"</span>);</span><br><span class="line">	namedWindow(<span class="string">"Scharr"</span>);</span><br><span class="line">	imshow(<span class="string">"srcImage"</span>, srcImage);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	<span class="comment">//一.最简单的Canny用法</span></span><br><span class="line">	Mat dstImage;</span><br><span class="line">	dstImage = srcImage.clone();</span><br><span class="line"></span><br><span class="line">	Canny(srcImage, dstImage, <span class="number">3</span>, <span class="number">9</span>, <span class="number">3</span>);</span><br><span class="line">	imshow(<span class="string">"Canny1"</span>, dstImage);</span><br><span class="line"></span><br><span class="line">	<span class="comment">//二.高阶的Canny用法， 转成灰度图，降噪，用Canny，最后将得到的边缘作为掩码，</span></span><br><span class="line">	<span class="comment">//拷贝原图到效果图上，得到彩色的边缘图</span></span><br><span class="line">	Mat dst, edge, gray;</span><br><span class="line">	<span class="comment">//1.创建与src同类型和大小的矩阵dst</span></span><br><span class="line">	dst.create(srcImage.size(), srcImage.type());</span><br><span class="line">	<span class="comment">//2.将原图转换为灰色图像</span></span><br><span class="line">	cvtColor(srcImage, gray, CV_BGR2GRAY);</span><br><span class="line">	<span class="comment">//3.先用使用3*3内核降噪</span></span><br><span class="line">	blur(gray, edge, Size(<span class="number">3</span>, <span class="number">3</span>));</span><br><span class="line">	<span class="comment">//4.运行Canny算子</span></span><br><span class="line">	Canny(edge, edge, <span class="number">3</span>, <span class="number">9</span>, <span class="number">3</span>);</span><br><span class="line">	<span class="comment">//5.将dst内的所有元素设为0</span></span><br><span class="line">	dst = Scalar::all(<span class="number">0</span>);</span><br><span class="line">	<span class="comment">//6.使用Canny算子输出的边缘图g_cannyDetectedEdges作为掩码，来将原图srcImage拷到目标图dst中</span></span><br><span class="line">	srcImage.copyTo(dst, edge);</span><br><span class="line"></span><br><span class="line">	imshow(<span class="string">"Canny2"</span>, dst);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	<span class="comment">//sobel算子</span></span><br><span class="line">	Mat dst_x, dst_y;</span><br><span class="line">	Mat s_dst_x, s_dst_y;</span><br><span class="line">	Mat ddst;</span><br><span class="line">	<span class="comment">//1.求x方向的梯度</span></span><br><span class="line">	Sobel(srcImage, dst_x, CV_16S, <span class="number">1</span>, <span class="number">0</span>, <span class="number">3</span>, <span class="number">1</span>, <span class="number">1</span>, BORDER_DEFAULT);</span><br><span class="line">	convertScaleAbs(dst_x, s_dst_x);</span><br><span class="line">	imshow(<span class="string">"X_Sobel"</span>, s_dst_x);</span><br><span class="line">	<span class="comment">//2.求y方向的梯度</span></span><br><span class="line">	Sobel(srcImage, dst_y, CV_16S, <span class="number">0</span>, <span class="number">1</span>, <span class="number">3</span>, <span class="number">1</span>, <span class="number">1</span>, BORDER_DEFAULT);</span><br><span class="line">	convertScaleAbs(dst_y, s_dst_y);</span><br><span class="line">	imshow(<span class="string">"Y_Sobel"</span>, s_dst_y);</span><br><span class="line">	<span class="comment">//合并梯度</span></span><br><span class="line">	addWeighted(s_dst_x, <span class="number">0.5</span>, s_dst_y, <span class="number">0.5</span>, <span class="number">0</span>, ddst);</span><br><span class="line">	imshow(<span class="string">"Sobel"</span>, ddst);</span><br><span class="line"></span><br><span class="line">	<span class="comment">//Laplace算子</span></span><br><span class="line">	Mat l_gray, l_dst, l_abs_dst;</span><br><span class="line">	<span class="comment">//1.使用高斯滤波消除噪声</span></span><br><span class="line">	GaussianBlur(srcImage, l_dst, Size(<span class="number">3</span>, <span class="number">3</span>), <span class="number">0</span>, <span class="number">0</span>, BORDER_DEFAULT);</span><br><span class="line">	<span class="comment">//2.转为灰度图</span></span><br><span class="line">	cvtColor(srcImage, l_gray, CV_RGB2GRAY);</span><br><span class="line">	<span class="comment">//3.使用Laplace函数</span></span><br><span class="line">	Laplacian(l_gray, l_ds, CV_16S, <span class="number">3</span>, t1, <span class="number">0</span>, BORDER_DEFAULT);</span><br><span class="line">    <span class="comment">//4.计算绝对值，并将结果转换成8位</span></span><br><span class="line">	convertScaleAbs(l_dst, l_abs_dst);</span><br><span class="line">	imshow(<span class="string">"Laplace"</span>, l_abs_dst);</span><br><span class="line"></span><br><span class="line">    <span class="comment">//Scharr滤波器</span></span><br><span class="line">	Mat s_x, s_y;</span><br><span class="line">	Mat s_abs_x, s_abs_y, s_dst;</span><br><span class="line">	<span class="comment">//1.求X方向梯度</span></span><br><span class="line">	Scharr(srcImage, s_x, CV_16S, <span class="number">1</span>, <span class="number">0</span>, <span class="number">1</span>, <span class="number">0</span>, BORDER_DEFAULT);</span><br><span class="line">	convertScaleAbs(s_x, s_abs_x);</span><br><span class="line">	imshow(<span class="string">"X_Scharr"</span>, s_abs_x);</span><br><span class="line">	<span class="comment">//2.求Y方向梯度</span></span><br><span class="line">	Scharr(srcImage, s_y, CV_16S, <span class="number">0</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">0</span>, BORDER_DEFAULT);</span><br><span class="line">	convertScaleAbs(s_y, s_abs_y);</span><br><span class="line">	imshow(<span class="string">"Y_Scharr"</span>, s_abs_y);</span><br><span class="line">	<span class="comment">//3.合并梯度</span></span><br><span class="line">	addWeighted(s_abs_x, <span class="number">0.5</span>, s_abs_y, <span class="number">0.5</span>, <span class="number">0</span>, s_dst);</span><br><span class="line">	imshow(<span class="string">"Scharr"</span>, s_dst);</span><br><span class="line"></span><br><span class="line">	waitKey(<span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;opencv2/opencv.hpp&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;opencv2/imgproc/imgproc.hpp&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;opencv2/highgui/highgui.hpp&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> cv;</span><br><span class="line"></span><br><span class="line">Mat srcImage, cImage, sImage, scImage, grayImage;</span><br><span class="line"><span class="comment">//Canny相关变量</span></span><br><span class="line">Mat cannyImg;</span><br><span class="line"><span class="keyword">int</span> cannyvalue = <span class="number">1</span>;</span><br><span class="line"><span class="comment">//Sobel相关参数</span></span><br><span class="line">Mat sobel_x, sobel_y;</span><br><span class="line">Mat sobel_abs_x, sobel_abs_y;</span><br><span class="line"><span class="keyword">int</span> sobelvalue = <span class="number">1</span>;</span><br><span class="line"><span class="comment">//Scharr相关参数</span></span><br><span class="line">Mat scharr_x, scharr_y;</span><br><span class="line">Mat scharr_abs_x, scharr_abs_y;</span><br><span class="line"></span><br><span class="line"><span class="comment">//回调函数</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Show</span><span class="params">()</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">on_Canny</span><span class="params">(<span class="keyword">int</span> , <span class="keyword">void</span> *)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">on_Sobel</span><span class="params">(<span class="keyword">int</span>, <span class="keyword">void</span> *)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Scharr</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	Show();</span><br><span class="line"></span><br><span class="line">	srcImage = imread(<span class="string">"4.jpg"</span>);</span><br><span class="line">	<span class="keyword">if</span> (!srcImage.data)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"Oh, no, srcImage is error"</span>);</span><br><span class="line">		<span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	namedWindow(<span class="string">"srcImage"</span>);</span><br><span class="line">	namedWindow(<span class="string">"Canny"</span>);</span><br><span class="line">	namedWindow(<span class="string">"Sobel"</span>);</span><br><span class="line">	namedWindow(<span class="string">"Scharr"</span>);</span><br><span class="line">	imshow(<span class="string">"srcImage"</span>, srcImage);</span><br><span class="line"></span><br><span class="line">	cImage.create(srcImage.size(), srcImage.type());</span><br><span class="line"></span><br><span class="line">	cvtColor(srcImage, grayImage, CV_BGR2GRAY);</span><br><span class="line"></span><br><span class="line">	createTrackbar(<span class="string">"canny"</span>, <span class="string">"Canny"</span>, &amp;cannyvalue, <span class="number">120</span>, on_Canny);</span><br><span class="line">	createTrackbar(<span class="string">"sobel"</span>, <span class="string">"Sobel"</span>, &amp;sobelvalue, <span class="number">3</span>, on_Sobel);</span><br><span class="line">	on_Canny(cannyvalue, <span class="number">0</span>);</span><br><span class="line">	on_Sobel(sobelvalue, <span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">	Scharr();</span><br><span class="line"></span><br><span class="line">	<span class="keyword">while</span> (<span class="keyword">char</span>(waitKey(<span class="number">1</span>)) != <span class="string">'q'</span>) &#123;&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Show</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"By 晴宝"</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">on_Canny</span><span class="params">(<span class="keyword">int</span>, <span class="keyword">void</span> *)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="comment">//降噪</span></span><br><span class="line">	blur(grayImage, cannyImg, Size(<span class="number">3</span>, <span class="number">3</span>));</span><br><span class="line">	<span class="comment">//canny算子</span></span><br><span class="line">	Canny(cannyImg, cannyImg, cannyvalue, cannyvalue * <span class="number">3</span>, <span class="number">3</span>);</span><br><span class="line">	<span class="comment">//将dstImage所有元素设为0</span></span><br><span class="line">	cImage = Scalar::all(<span class="number">0</span>);</span><br><span class="line">	srcImage.copyTo(cImage, cannyImg);</span><br><span class="line">	</span><br><span class="line">	imshow(<span class="string">"Canny"</span>, cImage);</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">on_Sobel</span><span class="params">(<span class="keyword">int</span>, <span class="keyword">void</span> *)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="comment">//x方向</span></span><br><span class="line">	Sobel(srcImage, sobel_x, CV_16S, <span class="number">1</span>, <span class="number">0</span>, (<span class="number">2</span> * sobelvalue + <span class="number">1</span>), <span class="number">1</span>, <span class="number">0</span>, BORDER_DEFAULT);</span><br><span class="line">	convertScaleAbs(sobel_x, sobel_abs_x);</span><br><span class="line">	<span class="comment">//y方向</span></span><br><span class="line">	Sobel(srcImage, sobel_y, CV_16S, <span class="number">0</span>, <span class="number">1</span>, (<span class="number">2</span> * sobelvalue + <span class="number">1</span>), <span class="number">1</span>, <span class="number">0</span>, BORDER_DEFAULT);</span><br><span class="line">	convertScaleAbs(sobel_y, sobel_abs_y);</span><br><span class="line">	<span class="comment">//合并</span></span><br><span class="line">	addWeighted(sobel_abs_x, <span class="number">0.5</span>, sobel_abs_y, <span class="number">0.5</span>, <span class="number">0</span>, sImage);</span><br><span class="line"></span><br><span class="line">	imshow(<span class="string">"Sobel"</span>, sImage);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Scharr</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	Scharr(srcImage, scharr_x, CV_16S, <span class="number">1</span>, <span class="number">0</span>, <span class="number">1</span>, <span class="number">0</span>, BORDER_DEFAULT);</span><br><span class="line">	convertScaleAbs(scharr_x, scharr_abs_x);</span><br><span class="line"></span><br><span class="line">	Scharr(srcImage, scharr_y, CV_16S, <span class="number">0</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">0</span>, BORDER_DEFAULT);</span><br><span class="line">	convertScaleAbs(scharr_y, scharr_abs_y);</span><br><span class="line"></span><br><span class="line">	addWeighted(scharr_abs_x, <span class="number">0.5</span>, scharr_abs_y, <span class="number">0.5</span>, <span class="number">0</span>, scImage);</span><br><span class="line"></span><br><span class="line">	imshow(<span class="string">"Scharr"</span>, scImage);</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="霍夫变换"><a href="#霍夫变换" class="headerlink" title="霍夫变换"></a>霍夫变换</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;opencv2/opencv.hpp&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;opencv2/imgproc/imgproc.hpp&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;opencv2/highgui/highgui.hpp&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> cv;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	Mat srcImg = imread(<span class="string">"4.jpg"</span>);</span><br><span class="line">	<span class="keyword">if</span> (!srcImg.data)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"Oh, no, srcImg is error"</span>);</span><br><span class="line">		<span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	namedWindow(<span class="string">"srcImg"</span>);</span><br><span class="line">	namedWindow(<span class="string">"Canny"</span>);</span><br><span class="line">	namedWindow(<span class="string">"Lines"</span>);</span><br><span class="line">	namedWindow(<span class="string">"Linesp"</span>);</span><br><span class="line">	namedWindow(<span class="string">"Circle"</span>);</span><br><span class="line">	imshow(<span class="string">"srcImg"</span>, srcImg);</span><br><span class="line"></span><br><span class="line">	Mat tmpImg, dstImg1, dstImg2, dstImg3;</span><br><span class="line"></span><br><span class="line">	<span class="comment">//1.进行边缘检测和转化为灰度图</span></span><br><span class="line">	Canny(srcImg, tmpImg, <span class="number">50</span>, <span class="number">200</span>, <span class="number">3</span>);</span><br><span class="line">	cvtColor(tmpImg, dstImg1, CV_GRAY2BGR);</span><br><span class="line">	cvtColor(tmpImg, dstImg2, CV_GRAY2BGR);</span><br><span class="line">	<span class="comment">//1.转为灰度图，进行图像平滑</span></span><br><span class="line">	cvtColor(srcImg, dstImg3, CV_BGR2GRAY);</span><br><span class="line">	GaussianBlur(dstImg3, dstImg3, Size(<span class="number">9</span>, <span class="number">9</span>), <span class="number">2</span>, <span class="number">2</span>);</span><br><span class="line">	</span><br><span class="line"></span><br><span class="line">	<span class="comment">//2.进行霍夫线变换</span></span><br><span class="line">	<span class="built_in">vector</span>&lt;Vec2f&gt; lines;  <span class="comment">//定义一个矢量结构lines用于存放得到的线段矢量集合</span></span><br><span class="line">	HoughLines(tmpImg, lines, <span class="number">1</span>, CV_PI / <span class="number">180</span>, <span class="number">150</span>, <span class="number">0</span>, <span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">	<span class="built_in">vector</span>&lt;Vec4i&gt; linesp;</span><br><span class="line">	HoughLinesP(tmpImg, linesp, <span class="number">1</span>, CV_PI / <span class="number">180</span>, <span class="number">80</span>, <span class="number">50</span>, <span class="number">10</span>);</span><br><span class="line"></span><br><span class="line">	<span class="comment">//2.进行霍夫圆变换</span></span><br><span class="line">	<span class="built_in">vector</span>&lt;Vec3f&gt; circles;</span><br><span class="line">	HoughCircles(dstImg3, circles, CV_HOUGH_GRADIENT, <span class="number">1.5</span>, <span class="number">10</span>, <span class="number">200</span>, <span class="number">100</span>, <span class="number">0</span>, <span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">	<span class="comment">//3.依次在图中绘制每条线段</span></span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">size_t</span> i = <span class="number">0</span>; i &lt; lines.size(); i++)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">float</span> rho = lines[i][<span class="number">0</span>], theta = lines[i][<span class="number">1</span>];</span><br><span class="line">		Point pt1, pt2;</span><br><span class="line">		<span class="keyword">double</span> a = <span class="built_in">cos</span>(theta), b = <span class="built_in">sin</span>(theta);</span><br><span class="line">		<span class="keyword">double</span> x0 = a * rho, y0 = b * rho;</span><br><span class="line">		pt1.x = cvRound(x0 + <span class="number">1000</span> * (-b));</span><br><span class="line">		pt1.y = cvRound(y0 + <span class="number">1000</span> * (a));</span><br><span class="line">		pt2.x = cvRound(x0 - <span class="number">1000</span> * (-b));</span><br><span class="line">		pt2.y = cvRound(y0 - <span class="number">1000</span> * (a));</span><br><span class="line">		line(dstImg1, pt1, pt2, Scalar(<span class="number">55</span>, <span class="number">100</span>, <span class="number">195</span>), <span class="number">1</span>, CV_AA);</span><br><span class="line"></span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">size_t</span> j = <span class="number">0</span>; j &lt; linesp.size(); j++)</span><br><span class="line">	&#123;</span><br><span class="line">		Vec4i l = linesp[j];</span><br><span class="line">		line(dstImg2, Point(l[<span class="number">0</span>], l[<span class="number">1</span>]), Point(l[<span class="number">2</span>], l[<span class="number">3</span>]), Scalar(<span class="number">186</span>, <span class="number">88</span>, <span class="number">255</span>), <span class="number">1</span>, CV_AA);</span><br><span class="line"></span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">//3.依次在图中绘制图圆</span></span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">size_t</span> z = <span class="number">0</span>; z &lt; circles.size(); z++)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="function">Point <span class="title">center</span><span class="params">(cvRound(circles[z][<span class="number">0</span>]), cvRound(circles[z][<span class="number">1</span>]))</span></span>;</span><br><span class="line">		<span class="keyword">int</span> radius = cvRound(circles[z][<span class="number">2</span>]);</span><br><span class="line">		<span class="comment">//绘制圆心</span></span><br><span class="line">		circle(srcImg, center, <span class="number">3</span>, Scalar(<span class="number">0</span>, <span class="number">255</span>, <span class="number">0</span>), <span class="number">-1</span>, <span class="number">8</span>, <span class="number">0</span>);</span><br><span class="line">		<span class="comment">//绘制圆轮廓</span></span><br><span class="line">		circle(srcImg, center, radius, Scalar(<span class="number">155</span>, <span class="number">50</span>, <span class="number">255</span>), <span class="number">3</span>, <span class="number">8</span>, <span class="number">0</span>);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	imshow(<span class="string">"Canny"</span>, tmpImg);</span><br><span class="line">	imshow(<span class="string">"Lines"</span>, dstImg1);</span><br><span class="line">	imshow(<span class="string">"Linesp"</span>, dstImg2);</span><br><span class="line">	imshow(<span class="string">"Circle"</span>, srcImg);</span><br><span class="line"></span><br><span class="line">	waitKey(<span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;opencv2/opencv.hpp&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;opencv2/imgproc/imgproc.hpp&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;opencv2/highgui/highgui.hpp&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> cv;</span><br><span class="line"></span><br><span class="line">Mat srcImage, dstImage, tmpImage;</span><br><span class="line"><span class="built_in">vector</span>&lt;Vec4i&gt; lines;</span><br><span class="line"><span class="comment">//变量接收的TrackBar位置参数</span></span><br><span class="line"><span class="keyword">int</span> threadhold = <span class="number">100</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">//回调函数</span></span><br><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">on_HoughLinesp</span><span class="params">(<span class="keyword">int</span> , <span class="keyword">void</span> *)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Show</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	Show();</span><br><span class="line">	</span><br><span class="line">	srcImage = imread(<span class="string">"4.jpg"</span>);</span><br><span class="line">	<span class="keyword">if</span> (!srcImage.data)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"Oh, no, srcImage is error"</span>);</span><br><span class="line">		<span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	namedWindow(<span class="string">"srcImage"</span>);</span><br><span class="line">	namedWindow(<span class="string">"HLP"</span>);</span><br><span class="line">	imshow(<span class="string">"srcImage"</span>, srcImage);</span><br><span class="line"></span><br><span class="line">	createTrackbar(<span class="string">"HoughLinesp"</span>, <span class="string">"HLP"</span>, &amp;threadhold, <span class="number">200</span>, on_HoughLinesp);</span><br><span class="line"></span><br><span class="line">	<span class="comment">//进行边缘检测和转化为灰度图</span></span><br><span class="line">	Canny(srcImage, tmpImage, <span class="number">50</span>, <span class="number">200</span>, <span class="number">3</span>);</span><br><span class="line">	cvtColor(tmpImage, dstImage, CV_GRAY2BGR);</span><br><span class="line">    <span class="comment">//调用一次回调函数，调用一次HoughLinesp函数</span></span><br><span class="line">	on_HoughLinesp(threadhold, <span class="number">0</span>);</span><br><span class="line">	HoughLinesP(tmpImage, lines, <span class="number">1</span>, CV_PI/<span class="number">180</span>, <span class="number">80</span>, <span class="number">50</span>, <span class="number">10</span>);</span><br><span class="line"></span><br><span class="line">	imshow(<span class="string">"HLP"</span>, dstImage);</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">while</span> (<span class="keyword">char</span>(waitKey(<span class="number">1</span>) != <span class="string">'q'</span>) ) &#123;&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">on_HoughLinesp</span><span class="params">(<span class="keyword">int</span>, <span class="keyword">void</span> *)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	Mat mydstImage = dstImage.clone();</span><br><span class="line">	Mat mytmpImage = tmpImage.clone();</span><br><span class="line"></span><br><span class="line">	<span class="built_in">vector</span>&lt;Vec4i&gt; mylines;</span><br><span class="line">	HoughLinesP(mytmpImage, mylines, <span class="number">1</span>, CV_PI/<span class="number">180</span>, threadhold + <span class="number">1</span>, <span class="number">50</span>, <span class="number">10</span>);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">size_t</span> i = <span class="number">0</span>; i &lt; mylines.size(); i++)</span><br><span class="line">	&#123;</span><br><span class="line">		Vec4i l = mylines[i];</span><br><span class="line">		line(mydstImage, Point(l[<span class="number">0</span>],l[<span class="number">1</span>]), Point(l[<span class="number">2</span>],l[<span class="number">3</span>]), Scalar(<span class="number">23</span>, <span class="number">180</span>, <span class="number">55</span>), <span class="number">1</span>, CV_AA);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	imshow(<span class="string">"HLP"</span>, mydstImage);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Show</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"\n\n\n\t请调整滚动条观察图像效果\n\n"</span>);</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"\n\n\t\t\t\t\t\t\t\t\t\t\t by 晴宝"</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="重映射"><a href="#重映射" class="headerlink" title="重映射"></a>重映射</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;opencv2/opencv.hpp&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;opencv2/highgui/highgui.hpp&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;opencv2/imgproc/imgproc.hpp&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> cv;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  Mat srcImage, dstImage;</span><br><span class="line">  Mat map_x, map_y;</span><br><span class="line">  </span><br><span class="line">  srcImage = imread(<span class="string">"4.jpg"</span>);</span><br><span class="line">  <span class="keyword">if</span>(!srcImage.data)</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"Oh,no, srcImage is error"</span>);</span><br><span class="line">	<span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  imshow(<span class="string">"srcImage"</span>, srcImage);</span><br><span class="line">  </span><br><span class="line">  <span class="comment">//创建和原图一样的效果图，x重映射图， y重映射图</span></span><br><span class="line">  dstImage.create(srcImage.size(), srcImage.type());</span><br><span class="line">  map_x.create(srcImage.size(), CV_32FC1);</span><br><span class="line">  map_y.create(srcImage.size(), CV_32FC1);</span><br><span class="line">  </span><br><span class="line">  <span class="comment">//双层循环，遍历每一个像素点，改变map_x &amp; map_y的值</span></span><br><span class="line">  <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; srcImage.rows; j++)</span><br><span class="line">  &#123;</span><br><span class="line">     <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; srcImage.cols; i++)</span><br><span class="line">	 &#123;</span><br><span class="line">	    <span class="comment">//改变map_x &amp; map_y的值</span></span><br><span class="line">	    map_x.at&lt;<span class="keyword">float</span>&gt;(j, i) =  <span class="keyword">static_cast</span>&lt;<span class="keyword">float</span>&gt;(i);</span><br><span class="line">		map_y.at&lt;<span class="keyword">float</span>&gt;(j, i) = <span class="keyword">static_cast</span>&lt;<span class="keyword">float</span>&gt;(srcImage.rows - j);</span><br><span class="line">	 &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  <span class="comment">//进行重映射操作</span></span><br><span class="line">  remap(srcImage, dstImage, map_x, map_y, CV_INTER_LINEAR, BORDER_CONSTANT, Scalar(<span class="number">0</span>, <span class="number">0</span>));</span><br><span class="line">  </span><br><span class="line">  imshow(<span class="string">"dstImage"</span>, dstImage);</span><br><span class="line">  </span><br><span class="line">  waitKey(<span class="number">0</span>);</span><br><span class="line">  </span><br><span class="line">  </span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//重映射操作</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;opencv2/opencv.hpp&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;opencv2/highgui/highgui.hpp&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;opencv2/imgproc/imgproc.hpp&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> cv;</span><br><span class="line"></span><br><span class="line">Mat srcImage, dstImage;</span><br><span class="line">Mat map_x, map_y;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">update_map</span><span class="params">(<span class="keyword">int</span> key)</span></span>;<span class="comment">//更新按键按键</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Show</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	Show();</span><br><span class="line"></span><br><span class="line">	srcImage = imread(<span class="string">"4.jpg"</span>);</span><br><span class="line">	<span class="keyword">if</span> (!srcImage.data)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"Oh, no, srcImage is error"</span>);</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	imshow(<span class="string">"srcImage"</span>, srcImage);</span><br><span class="line"></span><br><span class="line">	dstImage.create(srcImage.size(), srcImage.type());</span><br><span class="line">	map_x.create(srcImage.size(), CV_32FC1);</span><br><span class="line">	map_y.create(srcImage.size(), CV_32FC1);</span><br><span class="line"></span><br><span class="line">	<span class="comment">//轮询按键，更新map_x和map_y的值，进行重映射操作并显示效果图</span></span><br><span class="line">	<span class="keyword">while</span> (<span class="number">1</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="comment">//获取键盘按键</span></span><br><span class="line">		<span class="keyword">int</span> key = waitKey(<span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">		<span class="comment">//判断ESC是否按下，若按下便退出</span></span><br><span class="line">		<span class="keyword">if</span> ((key &amp; <span class="number">255</span>) == <span class="number">27</span>)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="built_in">cout</span> &lt;&lt; <span class="string">"程序退出。。。。。。\n"</span>;</span><br><span class="line">			<span class="keyword">break</span>;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		<span class="comment">//根据按下的键盘按键更新map_x &amp; map_y的值，然后调用remap()进行重映射</span></span><br><span class="line">		update_map(key);</span><br><span class="line">		remap(srcImage, dstImage, map_x, map_y, CV_INTER_LINEAR, BORDER_CONSTANT, Scalar(<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>));</span><br><span class="line"></span><br><span class="line">		imshow(<span class="string">"dstImage"</span>, dstImage);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Show</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"\n\n\t\t\t\t欢迎来到重映射示例程序~\n"</span>);</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"\t当前使用的OpenCV的版本为"</span>,CV_VERSION);</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"\n\t\t按键操作说明：\n\n"</span></span><br><span class="line">	       <span class="string">"\t\t键盘按键【ESC】- 退出程序\n"</span></span><br><span class="line">	       <span class="string">"\t\t键盘按键【1】 - 第一种映射方式\n"</span></span><br><span class="line">	       <span class="string">"\t\t键盘按键【2】 - 第二种映射方式\n"</span></span><br><span class="line">	       <span class="string">"\t\t键盘按键【3】 - 第三种映射方式\n"</span></span><br><span class="line">	       <span class="string">"\t\t键盘按键【4】 - 第四种映射方式\n"</span></span><br><span class="line">	       <span class="string">"\t\t\t\t\t\t\t\t\t\t\t\t\t by 晴宝\n"</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">update_map</span><span class="params">(<span class="keyword">int</span> key)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="comment">//双层循环，遍历每一个像素点</span></span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; srcImage.rows; j++)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; srcImage.cols; i++)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">switch</span> (key)</span><br><span class="line">			&#123;</span><br><span class="line">			<span class="keyword">case</span> <span class="string">'1'</span>:</span><br><span class="line">				<span class="keyword">if</span> (i &gt; srcImage.cols * <span class="number">0.25</span> &amp;&amp; i &lt; srcImage.cols * <span class="number">0.75</span> &amp;&amp;</span><br><span class="line">					j &gt; srcImage.rows * <span class="number">0.25</span> &amp;&amp; j &lt; srcImage.rows * <span class="number">0.75</span>)</span><br><span class="line">				&#123;</span><br><span class="line">					map_x.at&lt;<span class="keyword">float</span>&gt;(j, i) = <span class="keyword">static_cast</span>&lt;<span class="keyword">float</span>&gt;(<span class="number">2</span> * (i - srcImage.cols * <span class="number">0.25</span>) + <span class="number">0.5</span>);</span><br><span class="line">					map_y.at&lt;<span class="keyword">float</span>&gt;(j, i) = <span class="keyword">static_cast</span>&lt;<span class="keyword">float</span>&gt;(<span class="number">2</span> * (j - srcImage.rows * <span class="number">0.25</span>) + <span class="number">0.5</span>);</span><br><span class="line">				&#125;</span><br><span class="line">				<span class="keyword">else</span></span><br><span class="line">				&#123;</span><br><span class="line">					map_x.at&lt;<span class="keyword">float</span>&gt;(j, i) = <span class="number">0</span>;</span><br><span class="line">					map_y.at&lt;<span class="keyword">float</span>&gt;(j, i) = <span class="number">0</span>;</span><br><span class="line">				&#125;</span><br><span class="line">				<span class="keyword">break</span>;</span><br><span class="line">			<span class="keyword">case</span> <span class="string">'2'</span>:</span><br><span class="line">				map_x.at&lt;<span class="keyword">float</span>&gt;(j, i) = <span class="keyword">static_cast</span>&lt;<span class="keyword">float</span>&gt;(i);</span><br><span class="line">				map_y.at&lt;<span class="keyword">float</span>&gt;(j, i) = <span class="keyword">static_cast</span>&lt;<span class="keyword">float</span>&gt;(srcImage.rows - j);</span><br><span class="line">				<span class="keyword">break</span>;</span><br><span class="line">			<span class="keyword">case</span> <span class="string">'3'</span>:</span><br><span class="line">				map_x.at&lt;<span class="keyword">float</span>&gt;(j, i) = <span class="keyword">static_cast</span>&lt;<span class="keyword">float</span>&gt;(srcImage.cols - i);</span><br><span class="line">				map_y.at&lt;<span class="keyword">float</span>&gt;(j, i) = <span class="keyword">static_cast</span>&lt;<span class="keyword">float</span>&gt;(j);</span><br><span class="line">				<span class="keyword">break</span>;</span><br><span class="line">			<span class="keyword">case</span> <span class="string">'4'</span>:</span><br><span class="line">				map_x.at&lt;<span class="keyword">float</span>&gt;(j, i) = <span class="keyword">static_cast</span>&lt;<span class="keyword">float</span>&gt;(srcImage.cols - i);</span><br><span class="line">				map_y.at&lt;<span class="keyword">float</span>&gt;(j, i) = <span class="keyword">static_cast</span>&lt;<span class="keyword">float</span>&gt;(srcImage.rows - j);</span><br><span class="line">				<span class="keyword">break</span>;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="仿射变换"><a href="#仿射变换" class="headerlink" title="仿射变换"></a>仿射变换</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;opencv2/opencv.hpp&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;opencv2/highgui/highgui.hpp&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;opencv2/imgproc/imgproc.hpp&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> cv;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Show</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	Show();</span><br><span class="line"></span><br><span class="line">	<span class="comment">//1.参数准备</span></span><br><span class="line">	<span class="comment">//定义两组点，代表两个三角形</span></span><br><span class="line">	Point2f srcTriangle[<span class="number">3</span>];</span><br><span class="line">	Point2f dstTriangle[<span class="number">3</span>];</span><br><span class="line"></span><br><span class="line">	<span class="comment">//定义一些Mat变量</span></span><br><span class="line">	<span class="function">Mat <span class="title">rotMat</span><span class="params">(<span class="number">2</span>, <span class="number">3</span>, CV_32FC1)</span></span>;</span><br><span class="line">	<span class="function">Mat <span class="title">warpMat</span><span class="params">(<span class="number">2</span>, <span class="number">3</span>, CV_32FC1)</span></span>;</span><br><span class="line">	Mat srcImage, dstImage_warp, dstImage_rotate;</span><br><span class="line"></span><br><span class="line">	srcImage = imread(<span class="string">"4.jpg"</span>);</span><br><span class="line">	<span class="keyword">if</span> (!srcImage.data)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"Oh, no, srcImage is error"</span>);</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	imshow(<span class="string">"srcImage"</span>, srcImage);</span><br><span class="line"></span><br><span class="line">	<span class="comment">//设置目标图像的大小和类型与源图像一致</span></span><br><span class="line">	dstImage_warp = Mat::zeros(srcImage.rows, srcImage.cols, srcImage.type());</span><br><span class="line"></span><br><span class="line">	<span class="comment">//设置源图像和目标图像上的三组点以计算仿射变换</span></span><br><span class="line">	srcTriangle[<span class="number">0</span>] = Point2f(<span class="number">0</span>, <span class="number">0</span>);</span><br><span class="line">	srcTriangle[<span class="number">1</span>] = Point2f(<span class="keyword">static_cast</span>&lt;<span class="keyword">float</span>&gt;(srcImage.cols - <span class="number">1</span>), <span class="number">0</span>);</span><br><span class="line">	srcTriangle[<span class="number">2</span>] = Point2f(<span class="keyword">static_cast</span>&lt;<span class="keyword">float</span>&gt;(srcImage.rows - <span class="number">1</span>));</span><br><span class="line"></span><br><span class="line">	dstTriangle[<span class="number">0</span>] = Point2f(<span class="keyword">static_cast</span>&lt;<span class="keyword">float</span>&gt;(srcImage.cols*<span class="number">0.0</span>), <span class="keyword">static_cast</span>&lt;<span class="keyword">float</span>&gt;(srcImage.rows*<span class="number">0.33</span>));</span><br><span class="line">	dstTriangle[<span class="number">1</span>] = Point2f(<span class="keyword">static_cast</span>&lt;<span class="keyword">float</span>&gt;(srcImage.cols*<span class="number">0.65</span>), <span class="keyword">static_cast</span>&lt;<span class="keyword">float</span>&gt;(srcImage.rows*<span class="number">0.35</span>));</span><br><span class="line">	dstTriangle[<span class="number">2</span>] = Point2f(<span class="keyword">static_cast</span>&lt;<span class="keyword">float</span>&gt;(srcImage.cols*<span class="number">0.15</span>), <span class="keyword">static_cast</span>&lt;<span class="keyword">float</span>&gt;(srcImage.rows*<span class="number">0.6</span>));</span><br><span class="line"></span><br><span class="line">	<span class="comment">//求得仿射变换</span></span><br><span class="line">	warpMat = getAffineTransform(srcTriangle, dstTriangle);</span><br><span class="line"></span><br><span class="line">	<span class="comment">//对源图像应用刚刚求得的仿射变换</span></span><br><span class="line">	warpAffine(srcImage, dstImage_warp, warpMat, dstImage_warp.size());</span><br><span class="line"></span><br><span class="line">	<span class="comment">//对图像进行缩放后再旋转</span></span><br><span class="line">	<span class="comment">//计算绕图像中点顺时针旋转50度缩放因子为0.6的旋转矩阵</span></span><br><span class="line">	Point center = Point(dstImage_warp.cols / <span class="number">2</span>, dstImage_warp.rows / <span class="number">2</span>);</span><br><span class="line">	<span class="keyword">double</span> angle = <span class="number">-30.0</span>;</span><br><span class="line">	<span class="keyword">double</span> scale = <span class="number">0.8</span>;</span><br><span class="line"></span><br><span class="line">	<span class="comment">//通过上面的旋转细节信息求得旋转矩阵</span></span><br><span class="line">	rotMat = getRotationMatrix2D(center, angle, scale);</span><br><span class="line"></span><br><span class="line">	<span class="comment">//旋转已缩放后的图像</span></span><br><span class="line">	warpAffine(dstImage_warp, dstImage_rotate, rotMat, dstImage_warp.size());</span><br><span class="line"></span><br><span class="line">	imshow(<span class="string">"dstImage_warp"</span>, dstImage_warp);</span><br><span class="line">	imshow(<span class="string">"dstImage_rotate"</span>, dstImage_rotate);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	waitKey(<span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Show</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"\n\n\n\t欢迎来到【仿射变换】示例程序~\n\n"</span>);</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"\n\n\t\t\t\t\t\t\t\t\tby 晴宝\n\n\n"</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/OpenCV/" rel="tag"># OpenCV</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/03/28/OpenCV/OpenCV之图像处理/" rel="next" title="OpenCV之图像处理">
+                <i class="fa fa-chevron-left"></i> OpenCV之图像处理
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/03/28/OpenCV/OpenCV之图像轮廓与图像分割修复/" rel="prev" title="OpenCV之图像轮廓与图像分割修复">
+                OpenCV之图像轮廓与图像分割修复 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="https://blog-1253453438.cos.ap-beijing.myqcloud.com/hexo_icon/lq.jpg" alt="晴宝宝">
+          <p class="site-author-name" itemprop="name">晴宝宝</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/index.html">
+                <span class="site-state-item-count">147</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">14</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/lvqing17" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#边缘检测"><span class="nav-number">1.</span> <span class="nav-text">边缘检测</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#canny算子、sobel算子、Laplace算子、Scharr滤波器"><span class="nav-number">1.1.</span> <span class="nav-text">canny算子、sobel算子、Laplace算子、Scharr滤波器</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#霍夫变换"><span class="nav-number">2.</span> <span class="nav-text">霍夫变换</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#重映射"><span class="nav-number">3.</span> <span class="nav-text">重映射</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#仿射变换"><span class="nav-number">4.</span> <span class="nav-text">仿射变换</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy;  2017 - 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">晴宝宝</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+  
+  <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+  
+
+
+  
+  
+  
+  <script type="text/javascript" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js"></script>
+  
+
+</body>
+</html>
